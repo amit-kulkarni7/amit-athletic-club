@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { HERO_LEDGER, SITE_META } from "@/data/siteContent";
 
 export function HeroSection() {
@@ -8,7 +9,7 @@ export function HeroSection() {
       className="relative border-b border-stone bg-ivory overflow-hidden"
     >
       <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-12 pt-5 pb-10 sm:pt-12 sm:pb-16 lg:py-20">
-        {/* Top Architectural Metadata Row */}
+        {/* Top Metadata Row */}
         <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4 pb-4 sm:pb-8 mb-5 sm:mb-10 border-b border-stone">
           <div className="inline-flex items-center gap-2.5 sm:gap-3">
             <span
@@ -20,7 +21,7 @@ export function HeroSection() {
             </span>
           </div>
           <p className="hidden sm:block text-xs uppercase tracking-[0.18em] text-graphite-soft">
-            39.7392° N, 104.9903° W — {SITE_META.districtNote}
+            {SITE_META.conceptLocation}
           </p>
         </div>
 
@@ -30,7 +31,7 @@ export function HeroSection() {
           <div className="lg:col-span-7 flex flex-col justify-between">
             <div>
               <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-graphite-soft mb-2.5 sm:mb-4">
-                All-Round Athletic Club · Foundational to Advanced
+                All-Round Athletic Club · Beginners to Experienced Athletes
               </p>
 
               <h1
@@ -44,53 +45,53 @@ export function HeroSection() {
               </h1>
 
               <p className="mt-4 sm:mt-8 max-w-xl text-sm sm:text-lg leading-relaxed text-graphite-soft">
-                An architecturally composed training space in Denver built for
-                both dedicated beginners and experienced athletes. Uniting
-                progressive barbell strength, functional conditioning, guided
-                mobility, and attentive small-group coaching under one roof.
+                A calm, thoughtfully equipped fitness club concept in Denver
+                designed for both first-time lifters and experienced athletes.
+                Bringing together barbell strength, functional conditioning,
+                guided mobility, and small-group coaching under one roof.
               </p>
             </div>
 
-            {/* Actionable CTAs */}
+            {/* Actionable Route CTAs */}
             <div className="mt-5 sm:mt-10 grid grid-cols-2 sm:flex sm:flex-row sm:items-center gap-2.5 sm:gap-4">
-              <a
-                href="#membership"
+              <Link
+                href="/memberships"
                 className="inline-flex items-center justify-center bg-graphite px-4 sm:px-7 py-3.5 sm:py-4 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-ivory text-center transition-colors duration-200 hover:bg-forest"
               >
-                Memberships
-              </a>
-              <a
-                href="#programs"
+                Explore Memberships
+              </Link>
+              <Link
+                href="/programs"
                 className="inline-flex items-center justify-center border border-graphite bg-transparent px-4 sm:px-7 py-3.5 sm:py-4 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-graphite text-center transition-colors duration-200 hover:bg-graphite hover:text-ivory"
               >
-                Disciplines
-              </a>
+                Explore Programs
+              </Link>
             </div>
 
-            {/* Editorial Pull-Note (Desktop & Tablet inside left column) */}
+            {/* Editorial Pull-Notes */}
             <div className="hidden sm:grid mt-10 sm:mt-12 pt-6 border-t border-stone grid-cols-2 gap-6">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-forest">
-                  01 / Training Atmosphere
+                  01 / Unhurried Environment
                 </p>
                 <p className="mt-1.5 text-sm leading-relaxed text-graphite-soft">
-                  Calm, unhurried floor layouts with calibrated equipment and
-                  natural daylight—free from commercial gym clutter.
+                  Spacious lifting platforms, open turf, and natural daylight—free
+                  from overcrowded gym clutter.
                 </p>
               </div>
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-forest">
-                  02 / Structured Progression
+                  02 / Supportive Progression
                 </p>
                 <p className="mt-1.5 text-sm leading-relaxed text-graphite-soft">
-                  Accessible movement foundations for newcomers alongside
-                  disciplined programming for seasoned lifters.
+                  Welcoming starting points for beginners alongside structured
+                  programming for seasoned lifters.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Right Photography Plate Column (5 cols) */}
+          {/* Right Photography Column (5 cols) */}
           <div className="lg:col-span-5">
             <figure className="border border-stone bg-ivory-muted p-2.5 sm:p-4">
               <div className="relative aspect-[16/10] sm:aspect-[16/11] lg:aspect-[5/6] w-full overflow-hidden bg-graphite">
@@ -104,16 +105,16 @@ export function HeroSection() {
                 />
               </div>
               <figcaption className="mt-2.5 sm:mt-3 pt-2 sm:pt-2.5 border-t border-stone flex items-center justify-between gap-4 text-[10px] sm:text-[11px] uppercase tracking-[0.15em] text-graphite-soft">
-                <span>Plate 01 — Barbell &amp; Free-Weight Floor</span>
+                <span>Strength &amp; Free-Weight Floor</span>
                 <span className="font-serif italic normal-case tracking-normal text-xs sm:text-sm text-graphite">
-                  Setup &amp; Bracing
+                  Focus &amp; Form
                 </span>
               </figcaption>
             </figure>
           </div>
         </div>
 
-        {/* Bottom Architectural Ledger */}
+        {/* Bottom Club Highlights Ledger */}
         <dl className="mt-7 sm:mt-16 grid grid-cols-2 lg:grid-cols-4 border border-stone bg-ivory-muted/60 divide-y sm:divide-y-0 divide-x divide-stone">
           {HERO_LEDGER.map((item) => (
             <div key={item.label} className="p-3.5 sm:p-6">

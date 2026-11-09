@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { WHY_PILLARS } from "@/data/siteContent";
 
 export function WhyUsSection() {
@@ -13,22 +14,22 @@ export function WhyUsSection() {
           <div className="flex items-baseline gap-3">
             <span className="font-serif italic text-xl text-stone">03</span>
             <span className="text-xs font-semibold uppercase tracking-[0.22em] text-ivory">
-              Why Train With Us — The Club Standard
+              Why Choose AAC
             </span>
           </div>
           <span className="text-xs uppercase tracking-[0.18em] text-stone">
-            Principles Over Hype
+            Quality Over Hype
           </span>
         </div>
 
         {/* Editorial Header */}
-        <div className="mt-12 sm:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+        <div className="mt-10 sm:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end">
           <div className="lg:col-span-7">
             <h2
               id="why-us-heading"
               className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] leading-[1.06] text-ivory"
             >
-              Built on technical clarity,{" "}
+              Built on thoughtful coaching,{" "}
               <span className="font-serif italic font-normal text-stone">
                 not fitness clichés.
               </span>
@@ -36,44 +37,44 @@ export function WhyUsSection() {
           </div>
           <div className="lg:col-span-5">
             <p className="text-sm sm:text-base leading-relaxed text-stone">
-              We do not measure a session by noise or exhaustion. Every detail
-              of the club is structured around four foundational commitments to
-              how adults build and sustain physical capability.
+              We do not measure a workout by noise or exhaustion. Every detail
+              of the club is organized around four commitments to helping
+              members build lasting strength and confidence.
             </p>
           </div>
         </div>
 
-        {/* 4-Pillar Architectural Grid */}
-        <div className="mt-8 sm:mt-16 grid grid-cols-1 md:grid-cols-2 border border-stone/30 divide-y md:divide-y-0 md:divide-x divide-stone/30">
+        {/* 4-Pillar Grid */}
+        <div className="mt-8 sm:mt-14 grid grid-cols-1 md:grid-cols-2 border border-stone/30 divide-y md:divide-y-0 md:divide-x divide-stone/30">
           {WHY_PILLARS.map((pillar, idx) => (
             <article
               key={pillar.index}
-              className={`p-5 sm:p-10 lg:p-12 flex flex-col justify-between bg-graphite ${
+              className={`p-5 sm:p-9 lg:p-11 flex flex-col justify-between bg-graphite ${
                 idx >= 2 ? "md:border-t md:border-stone/30" : ""
               }`}
             >
               <div>
-                <div className="flex items-center justify-between gap-4 pb-4 sm:pb-6 border-b border-stone/20">
+                <div className="flex items-center justify-between gap-4 pb-4 border-b border-stone/20">
                   <span className="font-serif italic text-xl sm:text-2xl text-stone">
-                    Pillar {pillar.index}
+                    {pillar.index}
                   </span>
-                  <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-ivory/80 bg-forest px-2.5 py-1">
+                  <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-ivory/90 bg-forest px-2.5 py-1">
                     {pillar.emphasis}
                   </span>
                 </div>
 
-                <h3 className="mt-4 sm:mt-6 text-xl sm:text-2xl font-bold tracking-[-0.015em] text-ivory">
+                <h3 className="mt-4 sm:mt-5 text-xl sm:text-2xl font-bold tracking-[-0.015em] text-ivory">
                   {pillar.title}
                 </h3>
 
-                <p className="mt-2.5 sm:mt-4 text-sm sm:text-base leading-relaxed text-stone">
+                <p className="mt-2.5 text-sm sm:text-base leading-relaxed text-stone">
                   {pillar.description}
                 </p>
               </div>
 
-              <div className="mt-5 sm:mt-8 pt-3.5 sm:pt-4 border-t border-stone/20 flex items-center justify-between gap-4 text-xs text-ivory/90">
+              <div className="mt-5 pt-3.5 border-t border-stone/20 flex items-center justify-between gap-4 text-xs text-ivory/90">
                 <span className="uppercase tracking-[0.14em] text-stone">
-                  Standard:
+                  In Practice:
                 </span>
                 <span className="text-right font-medium">{pillar.detail}</span>
               </div>
@@ -82,22 +83,30 @@ export function WhyUsSection() {
         </div>
 
         {/* Bottom Action Bar */}
-        <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-6 border border-stone/30 bg-forest/30 p-6 sm:p-8">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-5 border border-stone/30 bg-forest/30 p-5 sm:p-7">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone">
-              Beginner &amp; Experienced Athlete Readiness
+              Welcoming to Beginners &amp; Experienced Lifters
             </p>
-            <p className="mt-1.5 text-sm sm:text-base text-ivory">
-              Every membership begins with an equipment and movement orientation
-              tailored to your current training background.
+            <p className="mt-1 text-sm sm:text-base text-ivory">
+              Every membership begins with a personal welcome session tailored
+              to your goals and comfort level.
             </p>
           </div>
-          <a
-            href="#membership"
-            className="shrink-0 inline-flex items-center justify-center bg-ivory px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-graphite transition-colors duration-200 hover:bg-stone"
-          >
-            View Membership Options
-          </a>
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center border border-stone/60 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-ivory hover:text-graphite"
+            >
+              About the Club
+            </Link>
+            <Link
+              href="/memberships"
+              className="inline-flex items-center justify-center bg-ivory px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-graphite transition-colors duration-200 hover:bg-stone"
+            >
+              Compare Plans
+            </Link>
+          </div>
         </div>
       </div>
     </section>

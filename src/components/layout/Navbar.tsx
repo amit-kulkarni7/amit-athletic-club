@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { NAV_ITEMS, SITE_META } from "@/data/siteContent";
 
 export function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -62,6 +65,11 @@ export function Navbar() {
     setIsOpen(false);
   };
 
+  const isRouteActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-ivory/95 backdrop-blur-md border-b border-stone">
       {/* Top micro-bar with concept location and portfolio disclosure badge */}
@@ -76,14 +84,14 @@ export function Navbar() {
       </div>
 
       {/* Main Navigation Bar */}
-      <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-12">
-        <div className="flex h-16 sm:h-20 items-center justify-between gap-4">
+      <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-6 xl:px-12">
+        <div className="flex h-16 sm:h-20 items-center justify-between gap-3">
           {/* Brand Monogram + Wordmark */}
-          <a
-            href="#top"
+          <Link
+            href="/"
             onClick={closeMenu}
-            className="group inline-flex items-center gap-3.5 py-1 text-graphite"
-            aria-label="AMIT ATHLETIC CLUB — Return to top of homepage"
+            className="group inline-flex shrink-0 items-center gap-3 py-1 text-graphite"
+            aria-label="AMIT ATHLETIC CLUB — Home"
           >
             <span
               aria-hidden="true"
@@ -92,46 +100,62 @@ export function Navbar() {
               {SITE_META.monogram}
             </span>
             <span className="flex flex-col">
-              <span className="text-xs sm:text-sm font-bold tracking-[0.22em] uppercase leading-none">
+              <span className="text-xs xl:text-sm font-bold tracking-[0.18em] xl:tracking-[0.22em] uppercase leading-none">
                 {SITE_META.brandName}
               </span>
-              <span className="mt-1 text-[10px] tracking-[0.18em] uppercase text-graphite-soft leading-none">
+              <span className="mt-1 text-[10px] tracking-[0.16em] xl:tracking-[0.18em] uppercase text-graphite-soft leading-none">
                 Denver · Athletic Club
               </span>
             </span>
-          </a>
+          </Link>
 
-          {/* Desktop Section Links */}
+          {/* Desktop Route Navigation */}
           <nav
-            aria-label="Primary section navigation"
-            className="hidden lg:flex items-center gap-8"
+            aria-label="Primary navigation"
+            className="hidden lg:flex items-center gap-4 xl:gap-8"
           >
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="group relative py-2 text-xs font-semibold uppercase tracking-[0.16em] text-graphite transition-colors duration-200 hover:text-forest"
-              >
-                <span className="mr-1.5 font-serif italic text-[13px] text-graphite-soft group-hover:text-forest">
-                  {item.index}
-                </span>
-                <span>{item.label}</span>
-                <span
-                  aria-hidden="true"
-                  className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-forest transition-all duration-200 group-hover:w-full"
-                />
-              </a>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const active = isRouteActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`group relative whitespace-nowrap py-2 text-[11px] xl:text-xs font-semibold uppercase tracking-[0.12em] xl:tracking-[0.16em] transition-colors duration-200 ${
+                    active
+                      ? "text-forest"
+                      : "text-graphite hover:text-forest"
+                  }`}
+                >
+                  <span
+                    className={`mr-1 xl:mr-1.5 font-serif italic text-[12px] xl:text-[13px] transition-colors duration-200 ${
+                      active
+                        ? "text-forest"
+                        : "text-graphite-soft group-hover:text-forest"
+                    }`}
+                  >
+                    {item.index}
+                  </span>
+                  <span>{item.label}</span>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute bottom-0 left-0 h-[2px] bg-forest transition-all duration-200 ${
+                      active ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  />
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Desktop Prominent Membership CTA + Mobile Menu Toggle */}
-          <div className="flex items-center gap-3">
-            <a
-              href="#membership"
-              className="hidden lg:inline-flex items-center justify-center bg-graphite px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-forest"
+          <div className="flex shrink-0 items-center gap-3">
+            <Link
+              href="/memberships"
+              className="hidden lg:inline-flex items-center justify-center whitespace-nowrap bg-graphite px-4 xl:px-5 py-3 text-[11px] xl:text-xs font-semibold uppercase tracking-[0.14em] xl:tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-forest"
             >
-              Membership Preview
-            </a>
+              Explore Memberships
+            </Link>
 
             <button
               ref={toggleButtonRef}
@@ -183,58 +207,69 @@ export function Navbar() {
       >
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6 py-6 flex flex-col justify-between min-h-[calc(100dvh-6.25rem)] overflow-y-auto">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-forest mb-4">
-              Directory — Homepage Sections
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-forest mb-3">
+              Club Directory — Pages
             </p>
-            <nav aria-label="Mobile section navigation">
+            <nav aria-label="Mobile navigation">
               <ul className="divide-y divide-stone border-y border-stone">
-                {NAV_ITEMS.map((item) => (
-                  <li key={item.href}>
-                    <a
-                      href={item.href}
-                      onClick={closeMenu}
-                      className="group flex items-baseline justify-between py-4 text-graphite transition-colors duration-150 hover:text-forest"
-                    >
-                      <span className="flex items-baseline gap-4">
-                        <span className="font-serif italic text-lg text-graphite-soft group-hover:text-forest">
-                          {item.index}
-                        </span>
-                        <span className="text-lg font-semibold uppercase tracking-[0.12em]">
-                          {item.label}
-                        </span>
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className="text-xs uppercase tracking-[0.18em] text-graphite-soft group-hover:text-forest"
+                {NAV_ITEMS.map((item) => {
+                  const active = isRouteActive(item.href);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={closeMenu}
+                        aria-current={active ? "page" : undefined}
+                        className={`group flex items-baseline justify-between py-3.5 transition-colors duration-150 ${
+                          active
+                            ? "text-forest"
+                            : "text-graphite hover:text-forest"
+                        }`}
                       >
-                        Jump →
-                      </span>
-                    </a>
-                  </li>
-                ))}
+                        <span className="flex items-baseline gap-4">
+                          <span
+                            className={`font-serif italic text-lg ${
+                              active
+                                ? "text-forest"
+                                : "text-graphite-soft group-hover:text-forest"
+                            }`}
+                          >
+                            {item.index}
+                          </span>
+                          <span className="text-lg font-semibold uppercase tracking-[0.12em]">
+                            {item.label}
+                          </span>
+                        </span>
+                        <span className="text-xs uppercase tracking-[0.18em] text-graphite-soft group-hover:text-forest">
+                          {active ? "Current" : "Visit →"}
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-stone space-y-5">
+          <div className="mt-6 pt-5 border-t border-stone space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <a
-                href="#membership"
+              <Link
+                href="/memberships"
                 onClick={closeMenu}
                 className="inline-flex items-center justify-center bg-forest px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-graphite"
               >
-                Explore Membership Tiers
-              </a>
-              <a
-                href="#programs"
+                Explore Memberships
+              </Link>
+              <Link
+                href="/contact"
                 onClick={closeMenu}
                 className="inline-flex items-center justify-center border border-graphite px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-graphite transition-colors duration-200 hover:bg-graphite hover:text-ivory"
               >
-                View Four Disciplines
-              </a>
+                Demo Inquiry Form
+              </Link>
             </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-graphite-soft">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs text-graphite-soft">
               <span className="font-medium uppercase tracking-[0.14em]">
                 {SITE_META.conceptLocation}
               </span>

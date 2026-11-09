@@ -1,24 +1,19 @@
-# AMIT ATHLETIC CLUB — GYM-M1 (Foundation and Core Design)
+# AMIT ATHLETIC CLUB — Multi-Page Fitness Club Website (`GYM-M2`)
 
-**AMIT ATHLETIC CLUB** is a fictional premium all-round fitness club concept set in Denver, Colorado, developed as a software-engineering and design portfolio project.
+**AMIT ATHLETIC CLUB** is a fictional premium all-round fitness club concept (`Denver, Colorado — Concept Location`), developed as a software-engineering and design portfolio project.
 
 > **Portfolio Disclosure:** AMIT ATHLETIC CLUB is a fictional fitness brand created as a portfolio demonstration. No physical club, memberships, or services are offered. All pricing shown is illustrative USD (`$`).
 
 ---
 
-## Milestone 1 Scope (`GYM-M1`)
+## Multi-Page Architecture (`GYM-M2`)
 
-- **Editorial & Architectural Design System:** Built around Warm Ivory (`#F5F3EE`), Graphite (`#1C211E`), Forest Green (`#46594B`), and Warm Stone (`#C9C5BA`), pairing `Manrope` with `Instrument Serif` via `next/font/google`.
-- **Homepage Sections:**
-  - Sticky accessible navigation with responsive mobile drawer (`aria-expanded`, `aria-controls`, `Escape` handling, and keyboard focus management)
-  - Editorial Hero (`MOVE WITH INTENTION.`) with architectural coordinate ledger
-  - Club Introduction & Spatial Zoning (`#club`)
-  - Programs Preview (`#programs`) — *Strength & Conditioning*, *Functional Training*, *Mobility & Recovery*, and *Small-Group Training*
-  - Why Train With Us (`#why-us`) — Four foundational standards
-  - Membership Preview (`#membership`) — Illustrative USD tiers (`$195`, `$265`, `$385`) and M2-ready comparison matrix
-  - Coaching Philosophy Preview (`#coaching`) — Methodology-driven presentation
-  - Closing CTA (`#final-cta`) & Footer with Denver concept location and portfolio disclosure
-- **Authentic Photography:** Locally optimized, verified Unsplash photography documented in [`IMAGE_CREDITS.md`](./IMAGE_CREDITS.md).
+- `/` — **Homepage**: Editorial hero (`MOVE WITH INTENTION.`), concise club introduction, 2×2 programs preview, four club pillars, compact membership preview, coaching methodology preview, and closing CTA.
+- `/about` — **About the Club & Philosophy**: Club story, approach for both newcomers and experienced lifters, four dedicated facility zones, and core club values.
+- `/programs` — **Training Programs & Weekly Schedule**: Detailed breakdown of all four disciplines (*Strength & Conditioning*, *Functional Training*, *Mobility & Recovery*, *Small-Group Training*), interactive client-side filtering by category and experience level (including empty-state handling and reset), and an interactive illustrative weekly class schedule.
+- `/memberships` — **Memberships & Illustrative Pricing**: Three illustrative USD membership tiers (*Foundation Access* `$195/mo`, *Club All-Round* `$265/mo`, *Performance & Coaching* `$385/mo`), functional Monthly / Yearly billing toggle (`20%` annual discount), desktop comparison table, and responsive mobile comparison cards.
+- `/trainers` — **Coaching Team & Methodology**: Four fictional, illustrative coaching roles (*Marcus Vance*, *Elena Rostova*, *Soren Lindqvist*, *Maya Lin*) paired with non-identifying movement photography and shared coaching standards.
+- `/contact` — **Contact & Demo Inquiry**: Concept location info, illustrative sample hours, and a client-side interactive inquiry form supporting URL query-parameter prefill (`?type=...&interest=...&billing=...&session=...`), accessible validation, and a truthful frontend simulation confirmation state.
 
 ---
 
@@ -27,8 +22,8 @@
 - **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript 5
 - **UI & Styling:** React 19, Tailwind CSS v4
-- **Optimization:** `next/image`, `next/font/google`
-- **Linting:** ESLint 9 (`eslint-config-next`)
+- **Optimization:** `next/image`, `next/font/google` (`Manrope` & `Instrument Serif`)
+- **Photography:** Authentic licensed Unsplash photography documented in [`IMAGE_CREDITS.md`](./IMAGE_CREDITS.md)
 
 ---
 

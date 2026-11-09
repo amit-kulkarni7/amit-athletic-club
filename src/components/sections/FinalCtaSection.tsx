@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SITE_META } from "@/data/siteContent";
 
 export function FinalCtaSection() {
@@ -8,9 +9,9 @@ export function FinalCtaSection() {
       className="border-b border-stone bg-forest text-ivory py-12 sm:py-20 lg:py-24"
     >
       <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-12">
-        <div className="border border-stone/40 bg-graphite p-8 sm:p-12 lg:p-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
-            <div className="lg:col-span-8 space-y-5">
+        <div className="border border-stone/40 bg-graphite p-7 sm:p-12 lg:p-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-end">
+            <div className="lg:col-span-8 space-y-4">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-stone">
                 {SITE_META.conceptLocation} · {SITE_META.tagline}
               </p>
@@ -26,33 +27,31 @@ export function FinalCtaSection() {
               </h2>
 
               <p className="max-w-2xl text-sm sm:text-base leading-relaxed text-stone">
-                Explore how our four training disciplines, calm architectural
-                floor zones, and illustrative membership tiers fit together—from
-                your first movement orientation to long-term strength and
-                recovery.
+                Explore our membership plans, browse the weekly training
+                schedule, or test the interactive inquiry form for this
+                portfolio concept.
               </p>
             </div>
 
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3.5">
-              <a
-                href="#membership"
+              <Link
+                href="/memberships"
                 className="inline-flex items-center justify-center bg-ivory px-7 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-graphite transition-colors duration-200 hover:bg-stone"
               >
-                Review Membership Tiers
-              </a>
-              <a
-                href="#programs"
+                Compare Memberships
+              </Link>
+              <Link
+                href="/contact"
                 className="inline-flex items-center justify-center border border-stone/60 bg-transparent px-7 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-ivory transition-colors duration-200 hover:bg-forest hover:border-forest"
               >
-                Explore Four Disciplines
-              </a>
+                Demo Inquiry Form
+              </Link>
             </div>
           </div>
 
-          <div className="mt-10 pt-6 border-t border-stone/25 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-stone">
+          <div className="mt-8 pt-5 border-t border-stone/25 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-stone">
             <span>
-              Milestone 1 Foundation — Responsive Homepage &amp; Core Design
-              System
+              Portfolio Concept Demonstration — Denver, Colorado
             </span>
             <a
               href="#top"
