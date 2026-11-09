@@ -1,0 +1,69 @@
+import { SITE_META } from "@/data/siteContent";
+
+export function FinalCtaSection() {
+  return (
+    <section
+      id="final-cta"
+      aria-labelledby="final-cta-heading"
+      className="border-b border-stone bg-forest text-ivory py-12 sm:py-20 lg:py-24"
+    >
+      <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-12">
+        <div className="border border-stone/40 bg-graphite p-8 sm:p-12 lg:p-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+            <div className="lg:col-span-8 space-y-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-stone">
+                {SITE_META.conceptLocation} · {SITE_META.tagline}
+              </p>
+
+              <h2
+                id="final-cta-heading"
+                className="text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.03em] leading-[0.98] text-ivory"
+              >
+                Begin With{" "}
+                <span className="font-serif italic font-normal normal-case tracking-normal text-stone">
+                  Intention.
+                </span>
+              </h2>
+
+              <p className="max-w-2xl text-sm sm:text-base leading-relaxed text-stone">
+                Explore how our four training disciplines, calm architectural
+                floor zones, and illustrative membership tiers fit together—from
+                your first movement orientation to long-term strength and
+                recovery.
+              </p>
+            </div>
+
+            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3.5">
+              <a
+                href="#membership"
+                className="inline-flex items-center justify-center bg-ivory px-7 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-graphite transition-colors duration-200 hover:bg-stone"
+              >
+                Review Membership Tiers
+              </a>
+              <a
+                href="#programs"
+                className="inline-flex items-center justify-center border border-stone/60 bg-transparent px-7 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-ivory transition-colors duration-200 hover:bg-forest hover:border-forest"
+              >
+                Explore Four Disciplines
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-10 pt-6 border-t border-stone/25 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-stone">
+            <span>
+              Milestone 1 Foundation — Responsive Homepage &amp; Core Design
+              System
+            </span>
+            <a
+              href="#top"
+              className="inline-flex items-center gap-2 font-semibold uppercase tracking-[0.18em] text-ivory hover:text-stone transition-colors duration-200"
+            >
+              <span>Return to Top</span>
+              <span aria-hidden="true">↑</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
