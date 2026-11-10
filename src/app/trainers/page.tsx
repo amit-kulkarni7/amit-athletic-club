@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   title: "Coaching Team & Methodology",
   description:
     "Explore AMIT ATHLETIC CLUB's coaching philosophy and illustrative trainer profiles across Strength, Functional Conditioning, Mobility, and Small-Group Training.",
+  openGraph: {
+    title: "Coaching Team & Methodology | AMIT ATHLETIC CLUB",
+    description:
+      "Explore AMIT ATHLETIC CLUB's coaching philosophy and illustrative trainer profiles across Strength, Functional Conditioning, Mobility, and Small-Group Training.",
+  },
 };
 
 export default function TrainersPage() {
@@ -278,8 +283,9 @@ export default function TrainersPage() {
                 Experience our coaching approach firsthand.
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-muted">
-                Test a demo orientation inquiry on our Contact page or review
-                how coaching sessions are included in our membership tiers.
+                Inquire about a complimentary welcome orientation on our Contact
+                page or explore how coaching sessions are integrated into our
+                membership plans.
               </p>
             </div>
             <div className="flex flex-col gap-3.5 sm:flex-row lg:col-span-5 lg:justify-end">

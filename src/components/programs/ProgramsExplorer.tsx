@@ -372,8 +372,8 @@ export function ProgramsExplorer() {
               <p className="text-sm leading-relaxed text-graphite-muted sm:text-base">
                 This sample timetable demonstrates how Strength, Functional
                 Conditioning, Small-Group cohorts, and Mobility classes balance
-                across the week. Select any session to test a prefilled demo
-                inquiry.
+                across the week. Select any session to inquire about availability
+                and schedule details.
               </p>
             </div>
           </div>
@@ -429,7 +429,7 @@ export function ProgramsExplorer() {
               <div className="col-span-4">Session & Focus</div>
               <div className="col-span-2">Discipline</div>
               <div className="col-span-2">Coach & Level</div>
-              <div className="col-span-2 text-right">Demo Inquiry</div>
+              <div className="col-span-2 text-right">Session Inquiry</div>
             </div>
 
             <div className="divide-y divide-graphite/15">

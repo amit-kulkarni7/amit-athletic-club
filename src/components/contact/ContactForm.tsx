@@ -162,7 +162,7 @@ export function validateMessage(value: string): string | undefined {
   return undefined;
 }
 
-function resolveInitialType(param: string | null): InquiryType {
+export function resolveInitialType(param: string | null): InquiryType {
   if (
     param === "membership" ||
     param === "trial" ||
@@ -174,7 +174,7 @@ function resolveInitialType(param: string | null): InquiryType {
   return "membership";
 }
 
-function resolveInitialInterest(
+export function resolveInitialInterest(
   type: InquiryType,
   interestParam: string | null
 ): string {
@@ -191,7 +191,7 @@ function resolveInitialInterest(
   return "general-club";
 }
 
-function resolveInitialBilling(param: string | null): BillingPreference {
+export function resolveInitialBilling(param: string | null): BillingPreference {
   return param === "yearly" ? "yearly" : "monthly";
 }
 
@@ -436,7 +436,7 @@ function ContactFormInner({
           </p>
 
           <p className="mt-3 text-xs leading-relaxed text-graphite-muted sm:text-sm">
-            Thank you for exploring AMIT ATHLETIC CLUB. In a live club environment, our membership team would review your training goals and contact you within one business day.
+            Thank you for exploring the AMIT ATHLETIC CLUB digital experience.
           </p>
 
           <div className="mt-8 pt-6 border-t border-graphite/15">

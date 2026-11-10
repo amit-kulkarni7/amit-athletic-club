@@ -28,8 +28,7 @@ export function FinalCtaSection() {
 
               <p className="max-w-2xl text-sm sm:text-base leading-relaxed text-stone">
                 Explore our membership plans, browse the weekly training
-                schedule, or test the interactive inquiry form for this
-                portfolio concept.
+                schedule, or reach out through our online inquiry form.
               </p>
             </div>
 

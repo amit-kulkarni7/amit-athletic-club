@@ -4,9 +4,17 @@ import {
   validateEmail,
   validateUsPhoneNumber,
   validateMessage,
+  resolveInitialType,
+  resolveInitialInterest,
+  resolveInitialBilling,
 } from "./ContactForm";
+import {
+  MEMBERSHIP_TIERS,
+  calculateAnnualDiscount,
+  ANNUAL_DISCOUNT_PERCENT,
+} from "../../data/siteContent";
 
-console.log("Starting contact form validation unit tests...");
+console.log("Starting AMIT ATHLETIC CLUB automated test suite...");
 
 // 1. Full Name Tests
 {
@@ -14,6 +22,8 @@ console.log("Starting contact form validation unit tests...");
   assert.strictEqual(validateFullName("Renée O'Connor"), undefined);
   assert.strictEqual(validateFullName("Jean-Luc Picard"), undefined);
   assert.strictEqual(validateFullName("Li Wei"), undefined);
+  assert.strictEqual(validateFullName("Jo"), undefined); // 2 chars (min boundary)
+  assert.strictEqual(validateFullName("A".repeat(100)), undefined); // 100 chars (max boundary)
 
   assert.ok(validateFullName("") !== undefined, "Empty name should fail");
   assert.ok(validateFullName("   ") !== undefined, "Whitespace name should fail");
@@ -37,8 +47,10 @@ console.log("✓ Full Name validation passed");
 {
   assert.strictEqual(validateEmail("alex@example.com"), undefined);
   assert.strictEqual(validateEmail("test.user+tag@sub.domain.co"), undefined);
+  assert.strictEqual(validateEmail("ALEX@EXAMPLE.COM"), undefined);
 
   assert.ok(validateEmail("") !== undefined, "Empty email should fail");
+  assert.ok(validateEmail("   ") !== undefined, "Whitespace email should fail");
   assert.ok(validateEmail("invalid-email") !== undefined, "No domain email should fail");
   assert.ok(validateEmail("alex@") !== undefined, "Missing domain should fail");
   assert.ok(validateEmail("@example.com") !== undefined, "Missing local part should fail");
@@ -71,10 +83,15 @@ console.log("✓ Email validation passed");
 
   // Invalid formats
   assert.ok(validateUsPhoneNumber("").error !== undefined, "Empty phone should fail");
+  assert.ok(validateUsPhoneNumber("   ").error !== undefined, "Whitespace phone should fail");
   assert.ok(validateUsPhoneNumber("12345").error !== undefined, "Short phone should fail");
   assert.ok(
     validateUsPhoneNumber("303555012345").error !== undefined,
     "Long phone should fail"
+  );
+  assert.ok(
+    validateUsPhoneNumber("abcdefghij").error !== undefined,
+    "Non-digit phone should fail"
   );
 
   // NANP rule: Area code cannot start with 0 or 1
@@ -122,4 +139,86 @@ console.log("✓ Phone Number validation passed");
 }
 console.log("✓ Message validation passed");
 
-console.log("All contact form validation unit tests passed successfully!");
+// 5. Membership Pricing & Discount Calculation Tests
+{
+  assert.strictEqual(ANNUAL_DISCOUNT_PERCENT, 20);
+
+  // Foundation Tier (195/mo standard)
+  const foundationCalc = calculateAnnualDiscount(195, 20);
+  assert.strictEqual(foundationCalc.effectiveMonthlyRate, 156);
+  assert.strictEqual(foundationCalc.annualTotal, 1872);
+  assert.strictEqual(foundationCalc.annualSavings, 468);
+
+  // Club All-Round Tier (265/mo standard)
+  const allRoundCalc = calculateAnnualDiscount(265, 20);
+  assert.strictEqual(allRoundCalc.effectiveMonthlyRate, 212);
+  assert.strictEqual(allRoundCalc.annualTotal, 2544);
+  assert.strictEqual(allRoundCalc.annualSavings, 636);
+
+  // Performance Tier (385/mo standard)
+  const perfCalc = calculateAnnualDiscount(385, 20);
+  assert.strictEqual(perfCalc.effectiveMonthlyRate, 308);
+  assert.strictEqual(perfCalc.annualTotal, 3696);
+  assert.strictEqual(perfCalc.annualSavings, 924);
+
+  // Verify static siteContent MEMBERSHIP_TIERS data integrity matches pure calculations
+  for (const tier of MEMBERSHIP_TIERS) {
+    const calc = calculateAnnualDiscount(tier.monthlyPriceUsd, tier.annualDiscountPercent);
+    assert.strictEqual(
+      tier.effectiveAnnualMonthlyUsd,
+      calc.effectiveMonthlyRate,
+      `Tier ${tier.id} effective monthly rate mismatch`
+    );
+    assert.strictEqual(
+      tier.annualTotalUsd,
+      calc.annualTotal,
+      `Tier ${tier.id} annual total mismatch`
+    );
+    assert.strictEqual(
+      tier.annualSavingsUsd,
+      calc.annualSavings,
+      `Tier ${tier.id} annual savings mismatch`
+    );
+  }
+}
+console.log("✓ Membership pricing and annual discount math verified");
+
+// 6. Inquiry URL Parameter Resolution Tests
+{
+  // resolveInitialType
+  assert.strictEqual(resolveInitialType("membership"), "membership");
+  assert.strictEqual(resolveInitialType("trial"), "trial");
+  assert.strictEqual(resolveInitialType("program"), "program");
+  assert.strictEqual(resolveInitialType("general"), "general");
+  assert.strictEqual(resolveInitialType("invalid"), "membership");
+  assert.strictEqual(resolveInitialType(null), "membership");
+  assert.strictEqual(resolveInitialType("<script>"), "membership");
+
+  // resolveInitialInterest
+  assert.strictEqual(resolveInitialInterest("membership", "all-round"), "all-round");
+  assert.strictEqual(resolveInitialInterest("membership", "foundation"), "foundation");
+  assert.strictEqual(resolveInitialInterest("membership", "performance"), "performance");
+  assert.strictEqual(resolveInitialInterest("membership", "invalid"), "all-round");
+  assert.strictEqual(resolveInitialInterest("membership", null), "all-round");
+
+  assert.strictEqual(
+    resolveInitialInterest("program", "functional-training"),
+    "functional-training"
+  );
+  assert.strictEqual(
+    resolveInitialInterest("program", "nonexistent"),
+    "strength-conditioning"
+  );
+
+  assert.strictEqual(resolveInitialInterest("trial", null), "welcome-orientation");
+  assert.strictEqual(resolveInitialInterest("general", null), "general-club");
+
+  // resolveInitialBilling
+  assert.strictEqual(resolveInitialBilling("yearly"), "yearly");
+  assert.strictEqual(resolveInitialBilling("monthly"), "monthly");
+  assert.strictEqual(resolveInitialBilling("something-else"), "monthly");
+  assert.strictEqual(resolveInitialBilling(null), "monthly");
+}
+console.log("✓ Inquiry URL parameter resolution verified");
+
+console.log("\nAll automated regression and unit tests passed successfully!");

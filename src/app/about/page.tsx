@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   title: "About the Club & Philosophy",
   description:
     "Explore the training philosophy, calm club environment, and core values behind AMIT ATHLETIC CLUB — a fictional Denver fitness club concept.",
+  openGraph: {
+    title: "About the Club & Philosophy | AMIT ATHLETIC CLUB",
+    description:
+      "Explore the training philosophy, calm club environment, and core values behind AMIT ATHLETIC CLUB — a fictional Denver fitness club concept.",
+  },
 };
 
 export default function AboutPage() {

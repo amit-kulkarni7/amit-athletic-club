@@ -1,13 +1,17 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { SITE_META } from "@/data/siteContent";
 
 export const metadata: Metadata = {
-  title: "Contact & Demo Inquiry",
+  title: "Contact & Inquiries",
   description:
-    "Test the interactive demo inquiry form for AMIT ATHLETIC CLUB — a fictional Denver fitness club portfolio project.",
+    "Get in touch with AMIT ATHLETIC CLUB in Denver, Colorado — inquire about membership tiers, schedule an orientation, or ask about our training programs.",
+  openGraph: {
+    title: "Contact & Inquiries | AMIT ATHLETIC CLUB",
+    description:
+      "Get in touch with AMIT ATHLETIC CLUB in Denver, Colorado — inquire about membership tiers, schedule an orientation, or ask about our training programs.",
+  },
 };
 
 export default function ContactPage() {
@@ -48,9 +52,8 @@ export default function ContactPage() {
             </div>
             <div className="lg:col-span-4">
               <p className="text-base leading-relaxed text-graphite-muted sm:text-lg">
-                Explore how prospective members inquire about memberships,
-                welcome orientations, or training programs through our
-                interactive demonstration form.
+                Explore our membership options, schedule a welcome orientation,
+                or ask our team about training programs and club spaces.
               </p>
             </div>
           </div>
@@ -107,36 +110,6 @@ export default function ContactPage() {
                 <p className="mt-4 border-t border-graphite/15 pt-3 font-mono text-[11px] tracking-[0.12em] text-graphite-muted uppercase">
                   Sample hours for concept demonstration
                 </p>
-              </div>
-
-              <div className="border border-graphite/15 bg-graphite p-6 text-ivory sm:p-8">
-                <span className="font-mono text-[11px] font-semibold tracking-[0.18em] text-stone uppercase">
-                  QUICK PREFILL LINKS
-                </span>
-                <p className="mt-2 text-xs leading-relaxed text-stone/90">
-                  Test how URL query parameters preselect form fields from
-                  across the website:
-                </p>
-                <div className="mt-4 flex flex-col gap-2 font-mono text-xs">
-                  <Link
-                    href="/contact?type=membership&interest=all-round&billing=yearly"
-                    className="border border-ivory/20 px-3.5 py-2.5 text-ivory transition-colors hover:border-stone hover:bg-ivory/10"
-                  >
-                    → Club All-Round (Yearly)
-                  </Link>
-                  <Link
-                    href="/contact?type=trial"
-                    className="border border-ivory/20 px-3.5 py-2.5 text-ivory transition-colors hover:border-stone hover:bg-ivory/10"
-                  >
-                    → Welcome Orientation Visit
-                  </Link>
-                  <Link
-                    href="/contact?type=program&interest=small-group-training"
-                    className="border border-ivory/20 px-3.5 py-2.5 text-ivory transition-colors hover:border-stone hover:bg-ivory/10"
-                  >
-                    → Small-Group Training Question
-                  </Link>
-                </div>
               </div>
             </div>
 

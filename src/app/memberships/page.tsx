@@ -4,9 +4,14 @@ import { MembershipsInteractive } from "@/components/memberships/MembershipsInte
 import { SITE_META } from "@/data/siteContent";
 
 export const metadata: Metadata = {
-  title: "Memberships & Illustrative Pricing",
+  title: "Memberships & Pricing",
   description:
     "Compare AMIT ATHLETIC CLUB's three illustrative membership tiers in USD, toggle between monthly and annual billing, and explore side-by-side plan features.",
+  openGraph: {
+    title: "Memberships & Pricing | AMIT ATHLETIC CLUB",
+    description:
+      "Compare AMIT ATHLETIC CLUB's three illustrative membership tiers in USD, toggle between monthly and annual billing, and explore side-by-side plan features.",
+  },
 };
 
 export default function MembershipsPage() {
@@ -77,8 +82,8 @@ export default function MembershipsPage() {
                 Have questions or want to explore an orientation visit?
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-muted">
-                Use our interactive inquiry form to test a membership
-                question or orientation request, or meet our coaching team.
+                Use our online inquiry form to ask about a membership tier or
+                orientation visit, or meet our coaching team.
               </p>
             </div>
             <div className="flex flex-col gap-3.5 sm:flex-row lg:col-span-5 lg:justify-end">

@@ -522,6 +522,22 @@ export const WHY_PILLARS: WhyPillar[] = [
 
 export const ANNUAL_DISCOUNT_PERCENT = 20;
 
+export function calculateAnnualDiscount(
+  monthlyPriceUsd: number,
+  discountPercent: number = ANNUAL_DISCOUNT_PERCENT
+): {
+  effectiveMonthlyRate: number;
+  annualTotal: number;
+  annualSavings: number;
+} {
+  const effectiveMonthlyRate = Math.round(
+    monthlyPriceUsd * (1 - discountPercent / 100)
+  );
+  const annualTotal = effectiveMonthlyRate * 12;
+  const annualSavings = monthlyPriceUsd * 12 - annualTotal;
+  return { effectiveMonthlyRate, annualTotal, annualSavings };
+}
+
 export const MEMBERSHIP_TIERS: MembershipTier[] = [
   {
     id: "foundation",

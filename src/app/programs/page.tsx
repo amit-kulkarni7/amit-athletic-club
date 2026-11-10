@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   title: "Training Programs & Weekly Schedule",
   description:
     "Explore AMIT ATHLETIC CLUB's four core training disciplines—Strength & Conditioning, Functional Training, Mobility & Recovery, and Small-Group Training—plus our illustrative weekly schedule.",
+  openGraph: {
+    title: "Training Programs & Weekly Schedule | AMIT ATHLETIC CLUB",
+    description:
+      "Explore AMIT ATHLETIC CLUB's four core training disciplines—Strength & Conditioning, Functional Training, Mobility & Recovery, and Small-Group Training—plus our illustrative weekly schedule.",
+  },
 };
 
 export default function ProgramsPage() {
@@ -80,8 +85,8 @@ export default function ProgramsPage() {
                 Every membership starts with a personal orientation.
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-muted">
-                Compare our membership options or test our demo inquiry form to
-                see how an orientation or program question works.
+                Compare our membership options or reach out through our online
+                inquiry form to ask about an orientation visit or training program.
               </p>
             </div>
             <div className="flex flex-col gap-3.5 sm:flex-row lg:col-span-5 lg:justify-end">
