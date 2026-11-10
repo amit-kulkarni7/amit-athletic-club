@@ -29,7 +29,7 @@ export function MembershipsInteractive() {
                 id="plans-heading"
                 className="text-xl font-semibold tracking-tight text-graphite sm:text-2xl"
               >
-                Select Illustrative Billing Cadence
+                Choose Your Billing Plan
               </h2>
               <p className="mt-1 text-sm text-graphite-muted">
                 Switch between month-to-month flexibility and annual billing
@@ -38,17 +38,17 @@ export function MembershipsInteractive() {
               </p>
             </div>
 
-            <div className="flex flex-col items-start gap-2 sm:items-end">
+            <div className="flex flex-col items-start gap-2.5 sm:items-end">
               <div
                 role="group"
                 aria-label="Billing period toggle"
-                className="inline-flex border border-graphite/25 bg-ivory p-1"
+                className="inline-flex w-full sm:w-auto border border-graphite/25 bg-ivory p-1"
               >
                 <button
                   type="button"
                   aria-pressed={!isYearly}
                   onClick={() => setBillingCycle("monthly")}
-                  className={`h-10 px-5 text-xs font-semibold tracking-[0.16em] uppercase transition-colors ${
+                  className={`h-11 flex-1 sm:flex-initial px-4 sm:px-6 text-xs font-semibold tracking-[0.16em] uppercase transition-colors ${
                     !isYearly
                       ? "bg-graphite text-ivory"
                       : "text-graphite hover:bg-ivory-warm"
@@ -60,7 +60,7 @@ export function MembershipsInteractive() {
                   type="button"
                   aria-pressed={isYearly}
                   onClick={() => setBillingCycle("yearly")}
-                  className={`inline-flex h-10 items-center gap-2 px-5 text-xs font-semibold tracking-[0.16em] uppercase transition-colors ${
+                  className={`inline-flex h-11 flex-1 sm:flex-initial items-center justify-center gap-2 px-4 sm:px-6 text-xs font-semibold tracking-[0.16em] uppercase transition-colors ${
                     isYearly
                       ? "bg-forest text-ivory"
                       : "text-graphite hover:bg-ivory-warm"

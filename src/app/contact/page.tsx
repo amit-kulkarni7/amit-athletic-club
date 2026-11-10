@@ -22,7 +22,7 @@ export default function ContactPage() {
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-graphite/15 pb-4">
             <div className="flex items-center gap-3">
               <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
-                01 / DEMO INQUIRY & CLUB INFORMATION
+                01 / CLUB INQUIRY & CONTACT
               </span>
               <span className="hidden h-1 w-1 rounded-full bg-forest sm:inline-block" />
               <span className="hidden font-mono text-xs tracking-[0.16em] text-graphite-muted uppercase sm:inline-block">
@@ -30,7 +30,7 @@ export default function ContactPage() {
               </span>
             </div>
             <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-muted uppercase">
-              CLIENT-SIDE FORM SIMULATION
+              Online Inquiry Form
             </span>
           </div>
 
@@ -68,7 +68,7 @@ export default function ContactPage() {
             <div className="space-y-8 lg:col-span-4">
               <div className="border border-graphite/15 bg-ivory-warm p-6 sm:p-8">
                 <span className="font-mono text-xs font-semibold tracking-[0.18em] text-forest uppercase">
-                  CONCEPT SETTING
+                  CLUB LOCATION
                 </span>
                 <h2
                   id="contact-form-heading"
@@ -89,7 +89,7 @@ export default function ContactPage() {
 
               <div className="border border-graphite/15 bg-ivory-warm p-6 sm:p-8">
                 <span className="font-mono text-xs font-semibold tracking-[0.18em] text-forest uppercase">
-                  ILLUSTRATIVE SAMPLE HOURS
+                  CLUB HOURS
                 </span>
                 <dl className="mt-4 space-y-3 border-t border-graphite/15 pt-4 text-sm">
                   {SITE_META.conceptHours.map((item) => (
@@ -105,7 +105,7 @@ export default function ContactPage() {
                   ))}
                 </dl>
                 <p className="mt-4 border-t border-graphite/15 pt-3 font-mono text-[11px] tracking-[0.12em] text-graphite-muted uppercase">
-                  Sample schedule for concept demonstration
+                  Sample hours for concept demonstration
                 </p>
               </div>
 

@@ -36,15 +36,15 @@ export function FinalCtaSection() {
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3.5">
               <Link
                 href="/memberships"
-                className="inline-flex items-center justify-center bg-ivory px-7 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-graphite transition-colors duration-200 hover:bg-stone"
+                className="inline-flex min-h-[48px] items-center justify-center bg-ivory px-7 text-xs font-semibold uppercase tracking-[0.2em] text-graphite transition-colors duration-200 hover:bg-stone"
               >
                 Compare Memberships
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center border border-stone/60 bg-transparent px-7 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-ivory transition-colors duration-200 hover:bg-forest hover:border-forest"
+                className="inline-flex min-h-[48px] items-center justify-center border border-stone/60 bg-transparent px-7 text-xs font-semibold uppercase tracking-[0.2em] text-ivory transition-colors duration-200 hover:bg-forest hover:border-forest"
               >
-                Demo Inquiry Form
+                Inquire &amp; Contact
               </Link>
             </div>
           </div>

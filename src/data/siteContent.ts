@@ -569,7 +569,7 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
       "Unlimited guided Mobility & Recovery studio classes",
       "Up to 3 coached Small-Group Training sessions per week (max 8 per class)",
       "Quarterly 1-on-1 progress check-in and program refresh with a coach",
-      "7-day advance class reservation window (illustrative)",
+      "7-day advance class reservation window",
     ],
     idealFor: "Members who want structured weekly coaching alongside open-gym access",
     ctaLabel: "Inquire About Club All-Round",
@@ -706,8 +706,8 @@ export const TRAINERS: TrainerProfile[] = [
       "Newcomers learning foundational barbell lifts and experienced lifters refining technique.",
     image: {
       src: "/images/trainer-strength.jpg",
-      alt: "Non-identifying view from behind of an athlete setting up under a barbell at a squat rack",
-      caption: "Illustrative Strength Study — Barbell Setup",
+      alt: "Athlete setting up under a barbell at a squat rack",
+      caption: "Barbell Setup & Alignment",
     },
   },
   {
@@ -729,8 +729,8 @@ export const TRAINERS: TrainerProfile[] = [
       "Recreational athletes, runners, and members looking to build stamina and agility.",
     image: {
       src: "/images/trainer-functional.jpg",
-      alt: "Non-identifying monochrome view from behind of an athlete performing a strict pull-up on a rig",
-      caption: "Illustrative Conditioning Study — Pull-Up Rig",
+      alt: "Athlete performing a strict pull-up on an athletic rig",
+      caption: "Conditioning & Rig Work",
     },
   },
   {
@@ -752,8 +752,8 @@ export const TRAINERS: TrainerProfile[] = [
       "Anyone experiencing everyday stiffness or looking to stay mobile alongside strength work.",
     image: {
       src: "/images/coaching-mobility-detail.jpg",
-      alt: "Non-identifying monochrome view of seated hamstring stretching on studio mats in natural window light",
-      caption: "Illustrative Mobility Study — Studio Stretching",
+      alt: "Athlete practicing seated hamstring stretching on studio mats in natural window light",
+      caption: "Studio Mobility & Recovery",
     },
   },
   {
@@ -775,8 +775,8 @@ export const TRAINERS: TrainerProfile[] = [
       "Members who enjoy structured group energy without losing personal coaching attention.",
     image: {
       src: "/images/trainer-small-group.jpg",
-      alt: "Non-identifying close-up of an athlete selecting dumbbells from a rack",
-      caption: "Illustrative Cohort Study — Free-Weight Selection",
+      alt: "Athlete selecting dumbbells from a free-weight rack",
+      caption: "Small-Group Weight Selection",
     },
   },
 ];

@@ -22,7 +22,7 @@ export function CoachingSection() {
             href="/trainers"
             className="text-xs font-semibold uppercase tracking-[0.18em] text-forest hover:text-graphite transition-colors duration-200"
           >
-            Meet the Illustrative Coaching Team →
+            Meet the Coaching Team →
           </Link>
         </div>
 
@@ -49,7 +49,7 @@ export function CoachingSection() {
             {/* Compact Trainer Specialties Directory */}
             <div className="border border-stone bg-ivory p-5">
               <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-forest">
-                Illustrative Coaching Roles
+                Coaching Specialties
               </p>
               <ul className="mt-3 divide-y divide-stone/70 text-xs">
                 {TRAINERS.map((trainer) => (
@@ -122,13 +122,13 @@ export function CoachingSection() {
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <Link
                 href="/trainers"
-                className="inline-flex items-center justify-center bg-graphite px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-forest"
+                className="inline-flex min-h-[48px] items-center justify-center bg-graphite px-7 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-forest"
               >
                 Meet Our Coaches
               </Link>
               <Link
                 href="/contact?type=trial"
-                className="inline-flex items-center justify-center border border-graphite bg-transparent px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-graphite transition-colors duration-200 hover:bg-graphite hover:text-ivory"
+                className="inline-flex min-h-[48px] items-center justify-center border border-graphite bg-transparent px-7 text-xs font-semibold uppercase tracking-[0.18em] text-graphite transition-colors duration-200 hover:bg-graphite hover:text-ivory"
               >
                 Inquire About an Orientation
               </Link>

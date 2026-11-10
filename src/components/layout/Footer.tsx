@@ -132,7 +132,7 @@ export function Footer() {
             </p>
           </div>
           <span className="shrink-0 text-[11px] uppercase tracking-[0.18em] text-stone border border-stone/40 px-3 py-1.5 self-start lg:self-center">
-            GYM-M2 · Multi-Page
+            GYM-M3 · Polished Edition
           </span>
         </div>
 

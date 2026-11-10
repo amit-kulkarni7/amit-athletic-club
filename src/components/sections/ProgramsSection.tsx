@@ -112,19 +112,19 @@ export function ProgramsSection() {
         {/* Bottom Route Bar */}
         <div className="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-stone bg-ivory p-5 sm:p-6">
           <p className="text-xs sm:text-sm text-graphite-soft">
-            Filter programs by experience level or browse our illustrative
-            weekly class schedule on the Programs page.
+            Filter programs by experience level or browse our weekly class
+            schedule on the Programs page.
           </p>
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <Link
               href="/programs"
-              className="inline-flex items-center justify-center bg-graphite px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-forest"
+              className="inline-flex min-h-[48px] items-center justify-center bg-graphite px-6 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-forest"
             >
               Explore All Programs
             </Link>
             <Link
               href="/programs#weekly-schedule"
-              className="inline-flex items-center justify-center border border-graphite px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-graphite transition-colors duration-200 hover:bg-graphite hover:text-ivory"
+              className="inline-flex min-h-[48px] items-center justify-center border border-graphite px-6 text-xs font-semibold uppercase tracking-[0.18em] text-graphite transition-colors duration-200 hover:bg-graphite hover:text-ivory"
             >
               Weekly Schedule
             </Link>

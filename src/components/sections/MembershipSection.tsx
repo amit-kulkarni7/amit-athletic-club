@@ -14,7 +14,7 @@ export function MembershipSection() {
           <div className="flex items-baseline gap-3">
             <span className="font-serif italic text-xl text-forest">04</span>
             <span className="text-xs font-semibold uppercase tracking-[0.22em] text-graphite">
-              Membership Preview — Illustrative USD Plans
+              Membership Options
             </span>
           </div>
           <Link
@@ -121,7 +121,7 @@ export function MembershipSection() {
               <div className="mt-6 pt-4 border-t border-stone flex flex-col gap-2.5">
                 <Link
                   href={`/contact?type=membership&interest=${tier.id}&billing=monthly`}
-                  className={`w-full inline-flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] transition-colors duration-200 ${
+                  className={`w-full inline-flex min-h-[48px] items-center justify-center px-5 text-xs font-semibold uppercase tracking-[0.18em] transition-colors duration-200 ${
                     tier.featured
                       ? "bg-forest text-ivory hover:bg-graphite"
                       : "border border-graphite bg-transparent text-graphite hover:bg-graphite hover:text-ivory"
@@ -148,7 +148,7 @@ export function MembershipSection() {
           </div>
           <Link
             href="/memberships"
-            className="shrink-0 inline-flex items-center justify-center bg-graphite px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-forest"
+            className="shrink-0 inline-flex min-h-[48px] items-center justify-center bg-graphite px-6 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-forest"
           >
             Full Membership Comparison →
           </Link>

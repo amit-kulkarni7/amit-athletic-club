@@ -166,7 +166,7 @@ export function Navbar() {
               aria-label={
                 isOpen ? "Close navigation menu" : "Open navigation menu"
               }
-              className="lg:hidden inline-flex items-center gap-2.5 border border-graphite px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-graphite transition-colors duration-200 hover:bg-graphite hover:text-ivory"
+              className="lg:hidden inline-flex min-h-[44px] items-center gap-2.5 border border-graphite px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-graphite transition-colors duration-200 hover:bg-graphite hover:text-ivory"
             >
               <span>{isOpen ? "Close" : "Menu"}</span>
               <span
@@ -256,16 +256,16 @@ export function Navbar() {
               <Link
                 href="/memberships"
                 onClick={closeMenu}
-                className="inline-flex items-center justify-center bg-forest px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-graphite"
+                className="inline-flex min-h-[48px] items-center justify-center bg-forest px-5 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-colors duration-200 hover:bg-graphite"
               >
                 Explore Memberships
               </Link>
               <Link
                 href="/contact"
                 onClick={closeMenu}
-                className="inline-flex items-center justify-center border border-graphite px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-graphite transition-colors duration-200 hover:bg-graphite hover:text-ivory"
+                className="inline-flex min-h-[48px] items-center justify-center border border-graphite px-5 text-xs font-semibold uppercase tracking-[0.18em] text-graphite transition-colors duration-200 hover:bg-graphite hover:text-ivory"
               >
-                Demo Inquiry Form
+                Inquire &amp; Contact
               </Link>
             </div>
 

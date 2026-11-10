@@ -29,7 +29,7 @@ export default function MembershipsPage() {
               </span>
             </div>
             <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-muted uppercase">
-              ILLUSTRATIVE USD PRICING · PORTFOLIO CONCEPT
+              USD ($) Pricing · Portfolio Concept
             </span>
           </div>
 
@@ -77,9 +77,8 @@ export default function MembershipsPage() {
                 Have questions or want to explore an orientation visit?
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-muted">
-                Use our interactive demo inquiry form to test a membership
-                question or orientation request, or meet our illustrative
-                coaching team.
+                Use our interactive inquiry form to test a membership
+                question or orientation request, or meet our coaching team.
               </p>
             </div>
             <div className="flex flex-col gap-3.5 sm:flex-row lg:col-span-5 lg:justify-end">

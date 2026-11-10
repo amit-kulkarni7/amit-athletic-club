@@ -56,13 +56,13 @@ export function HeroSection() {
             <div className="mt-5 sm:mt-10 grid grid-cols-2 sm:flex sm:flex-row sm:items-center gap-2.5 sm:gap-4">
               <Link
                 href="/memberships"
-                className="inline-flex items-center justify-center bg-graphite px-4 sm:px-7 py-3.5 sm:py-4 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-ivory text-center transition-colors duration-200 hover:bg-forest"
+                className="inline-flex min-h-[48px] items-center justify-center bg-graphite px-4 sm:px-7 py-3 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-ivory text-center transition-colors duration-200 hover:bg-forest"
               >
                 Explore Memberships
               </Link>
               <Link
                 href="/programs"
-                className="inline-flex items-center justify-center border border-graphite bg-transparent px-4 sm:px-7 py-3.5 sm:py-4 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-graphite text-center transition-colors duration-200 hover:bg-graphite hover:text-ivory"
+                className="inline-flex min-h-[48px] items-center justify-center border border-graphite bg-transparent px-4 sm:px-7 py-3 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-graphite text-center transition-colors duration-200 hover:bg-graphite hover:text-ivory"
               >
                 Explore Programs
               </Link>

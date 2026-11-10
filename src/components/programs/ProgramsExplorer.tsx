@@ -106,7 +106,7 @@ export function ProgramsExplorer() {
                     type="button"
                     aria-pressed={selectedCategory === "All"}
                     onClick={() => setSelectedCategory("All")}
-                    className={`h-10 px-4 text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
+                    className={`min-h-[40px] px-3.5 sm:px-4 text-[11px] sm:text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
                       selectedCategory === "All"
                         ? "bg-forest text-ivory"
                         : "border border-graphite/20 bg-ivory text-graphite hover:border-graphite"
@@ -122,7 +122,7 @@ export function ProgramsExplorer() {
                         type="button"
                         aria-pressed={isActive}
                         onClick={() => setSelectedCategory(category)}
-                        className={`h-10 px-4 text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
+                        className={`min-h-[40px] px-3.5 sm:px-4 text-[11px] sm:text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
                           isActive
                             ? "bg-forest text-ivory"
                             : "border border-graphite/20 bg-ivory text-graphite hover:border-graphite"
@@ -149,7 +149,7 @@ export function ProgramsExplorer() {
                     type="button"
                     aria-pressed={selectedLevel === "All"}
                     onClick={() => setSelectedLevel("All")}
-                    className={`h-10 px-4 text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
+                    className={`min-h-[40px] px-3.5 sm:px-4 text-[11px] sm:text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
                       selectedLevel === "All"
                         ? "bg-graphite text-ivory"
                         : "border border-graphite/20 bg-ivory text-graphite hover:border-graphite"
@@ -165,7 +165,7 @@ export function ProgramsExplorer() {
                         type="button"
                         aria-pressed={isActive}
                         onClick={() => setSelectedLevel(level)}
-                        className={`h-10 px-4 text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
+                        className={`min-h-[40px] px-3.5 sm:px-4 text-[11px] sm:text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
                           isActive
                             ? "bg-graphite text-ivory"
                             : "border border-graphite/20 bg-ivory text-graphite hover:border-graphite"
@@ -332,7 +332,7 @@ export function ProgramsExplorer() {
                         </p>
                         <Link
                           href={`/contact?type=program&interest=${program.id}`}
-                          className="inline-flex h-11 items-center justify-center bg-forest px-6 text-xs font-semibold tracking-[0.16em] text-ivory uppercase transition-colors hover:bg-forest-light"
+                          className="inline-flex min-h-[48px] items-center justify-center bg-forest px-6 text-xs font-semibold tracking-[0.16em] text-ivory uppercase transition-colors hover:bg-forest-light focus:outline-none focus:ring-2 focus:ring-forest"
                         >
                           Inquire About {program.title}
                         </Link>
@@ -362,7 +362,7 @@ export function ProgramsExplorer() {
                 id="schedule-heading"
                 className="mt-3 text-3xl leading-[1.06] font-semibold tracking-[-0.025em] text-graphite uppercase sm:text-5xl"
               >
-                Illustrative Weekly{" "}
+                Weekly Class{" "}
                 <span className="font-serif font-normal tracking-normal text-forest lowercase italic">
                   Schedule.
                 </span>
@@ -389,7 +389,7 @@ export function ProgramsExplorer() {
                 type="button"
                 aria-pressed={selectedDay === "All"}
                 onClick={() => setSelectedDay("All")}
-                className={`h-10 px-4 text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
+                className={`min-h-[38px] px-3.5 sm:px-4 text-[11px] sm:text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
                   selectedDay === "All"
                     ? "bg-forest text-ivory"
                     : "border border-graphite/20 bg-ivory text-graphite hover:border-graphite"
@@ -405,7 +405,7 @@ export function ProgramsExplorer() {
                     type="button"
                     aria-pressed={isActive}
                     onClick={() => setSelectedDay(day)}
-                    className={`h-10 px-3.5 text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
+                    className={`min-h-[38px] px-3 sm:px-3.5 text-[11px] sm:text-xs font-semibold tracking-[0.14em] uppercase transition-colors ${
                       isActive
                         ? "bg-forest text-ivory"
                         : "border border-graphite/20 bg-ivory text-graphite hover:border-graphite"
@@ -418,7 +418,7 @@ export function ProgramsExplorer() {
             </div>
 
             <span className="font-mono text-[11px] tracking-[0.14em] text-graphite-muted uppercase">
-              ILLUSTRATIVE SCHEDULE · NO LIVE BOOKING
+              Sample Timetable · Concept Schedule
             </span>
           </div>
 

@@ -33,7 +33,7 @@ export default function TrainersPage() {
               </span>
             </div>
             <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-muted uppercase">
-              ILLUSTRATIVE COACHING ROLES
+              Meet the Coaching Team
             </span>
           </div>
 
@@ -59,23 +59,22 @@ export default function TrainersPage() {
             </div>
           </div>
 
-          {/* Illustrative Concept Notice */}
+          {/* Concept Coaching Notice */}
           <div className="mt-10 border border-graphite/15 bg-ivory-warm px-6 py-4">
             <p className="text-xs leading-relaxed text-graphite-muted sm:text-sm">
               <strong className="font-semibold text-graphite">
-                Illustrative Concept Profiles:
+                Concept Coaching Roster:
               </strong>{" "}
-              The coaching profiles below represent fictional roles created to
+              The coaching profiles below represent concept roles created to
               demonstrate how AMIT ATHLETIC CLUB structures instruction across
-              its four training disciplines. Each profile is paired with
-              non-identifying movement photography rather than portraits of
-              stock-photo models.
+              its four core disciplines. Imagery showcases actual movement form
+              and gym technique rather than staged modeling.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 4 Illustrative Coaching Profiles */}
+      {/* 4 Coaching Profiles */}
       <section
         aria-labelledby="trainers-roster-heading"
         className="border-b border-graphite/15 py-20 sm:py-28"
@@ -84,13 +83,13 @@ export default function TrainersPage() {
           <div className="mb-12 flex flex-col justify-between gap-4 border-b border-graphite/15 pb-6 sm:flex-row sm:items-end">
             <div>
               <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
-                02 / SPECIALIST ROLES
+                02 / COACHING TEAM
               </span>
               <h2
                 id="trainers-roster-heading"
                 className="mt-2 text-3xl font-semibold tracking-[-0.02em] text-graphite uppercase sm:text-4xl"
               >
-                Illustrative Coaching Team
+                Meet the Coaching Team
               </h2>
             </div>
             <span className="font-mono text-xs tracking-[0.14em] text-graphite-muted uppercase">
@@ -111,12 +110,12 @@ export default function TrainersPage() {
                     <span className="font-mono text-xs font-semibold tracking-[0.18em] text-forest uppercase">
                       {trainer.index} · {trainer.specialty}
                     </span>
-                    <span className="border border-graphite/20 bg-ivory px-2.5 py-0.5 font-mono text-[10px] font-semibold tracking-[0.14em] text-graphite-muted uppercase">
-                      Fictional Concept Role
+                    <span className="font-mono text-xs tracking-[0.14em] text-graphite-muted uppercase">
+                      {trainer.role}
                     </span>
                   </div>
 
-                  {/* Non-identifying Discipline Study Image */}
+                  {/* Discipline Movement Image */}
                   <figure className="mt-6">
                     <div className="relative aspect-[16/10] w-full overflow-hidden border border-graphite/15 bg-graphite">
                       <Image
@@ -129,7 +128,7 @@ export default function TrainersPage() {
                     </div>
                     <figcaption className="mt-2 flex items-center justify-between font-mono text-[10px] tracking-[0.14em] text-graphite-muted uppercase">
                       <span>{trainer.image.caption}</span>
-                      <span>Non-Identifying Discipline Study</span>
+                      <span>AAC Curriculum</span>
                     </figcaption>
                   </figure>
 
@@ -194,7 +193,7 @@ export default function TrainersPage() {
                   </Link>
                   <Link
                     href={`/contact?type=program&interest=${trainer.programId}`}
-                    className="inline-flex h-10 items-center justify-center bg-forest px-5 text-xs font-semibold tracking-[0.16em] text-ivory uppercase transition-colors hover:bg-forest-light"
+                    className="inline-flex min-h-[44px] items-center justify-center bg-forest px-6 text-xs font-semibold tracking-[0.16em] text-ivory uppercase transition-colors hover:bg-forest-light focus:outline-none focus:ring-2 focus:ring-forest"
                   >
                     Inquire About Coaching
                   </Link>
