@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   COACHING_PRINCIPLES,
-  SITE_META,
+  ROUTE_EDITORIAL_MAP,
   TRAINERS,
 } from "@/data/siteContent";
 
@@ -28,15 +28,9 @@ export default function TrainersPage() {
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-graphite/15 pb-4">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
-                01 / COACHING METHODOLOGY & PROFILES
-              </span>
-              <span className="hidden h-1 w-1 rounded-full bg-forest sm:inline-block" />
-              <span className="hidden font-mono text-xs tracking-[0.16em] text-graphite-muted uppercase sm:inline-block">
-                {SITE_META.conceptLocation}
-              </span>
-            </div>
+            <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
+              {ROUTE_EDITORIAL_MAP["/trainers"].eyebrow}
+            </span>
             <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-muted uppercase">
               Meet the Coaching Team
             </span>

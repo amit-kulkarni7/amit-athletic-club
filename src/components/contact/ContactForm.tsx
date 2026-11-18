@@ -2,7 +2,14 @@
 
 import { useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
+import { CountryCode } from "libphonenumber-js/max";
 import { MEMBERSHIP_TIERS, PROGRAMS } from "@/data/siteContent";
+import {
+  ALL_COUNTRIES,
+  POPULAR_COUNTRIES,
+  getSamplePlaceholder,
+} from "@/components/contact/countries";
+import { validateInternationalPhoneNumber } from "@/components/contact/phoneValidation";
 
 export type InquiryType = "membership" | "trial" | "program" | "general";
 export type BillingPreference = "monthly" | "yearly";
@@ -99,60 +106,22 @@ export function validateEmail(value: string): string | undefined {
   return undefined;
 }
 
+export { validateInternationalPhoneNumber };
+
 /**
- * Validates US phone numbers according to North American Numbering Plan (NANP):
- * - Accepts 10 digits, or 11 digits starting with 1
- * - Area code cannot begin with 0 or 1
- * - Exchange code cannot begin with 0 or 1
- * - Rejects repeated digit patterns (e.g., 0000000000, 1111111111)
+ * Validates phone numbers with US as default region, supporting international numbers as well.
  */
 export function validateUsPhoneNumber(value: string): {
   error?: string;
   formatted?: string;
+  e164?: string;
 } {
-  const trimmed = value.trim();
-  if (!trimmed) {
-    return { error: "Please enter your phone number." };
-  }
-
-  const digitsOnly = trimmed.replace(/\D/g, "");
-
-  let tenDigits = digitsOnly;
-  if (digitsOnly.length === 11 && digitsOnly.startsWith("1")) {
-    tenDigits = digitsOnly.slice(1);
-  }
-
-  if (tenDigits.length !== 10) {
-    return {
-      error:
-        "Please enter a valid 10-digit US phone number (e.g., (303) 555-0123).",
-    };
-  }
-
-  const areaCode = tenDigits.slice(0, 3);
-  const exchangeCode = tenDigits.slice(3, 6);
-  const subscriberNumber = tenDigits.slice(6, 10);
-
-  if (areaCode[0] === "0" || areaCode[0] === "1") {
-    return {
-      error: "US area codes cannot begin with 0 or 1.",
-    };
-  }
-
-  if (exchangeCode[0] === "0" || exchangeCode[0] === "1") {
-    return {
-      error: "US phone number prefix cannot begin with 0 or 1.",
-    };
-  }
-
-  if (/^(\d)\1{9}$/.test(tenDigits)) {
-    return {
-      error: "Please enter an active US phone number.",
-    };
-  }
-
-  const formatted = `(${areaCode}) ${exchangeCode}-${subscriberNumber}`;
-  return { formatted };
+  const res = validateInternationalPhoneNumber(value, "US");
+  return {
+    error: res.error,
+    formatted: res.formatted || res.national,
+    e164: res.e164,
+  };
 }
 
 export function validateMessage(value: string): string | undefined {
@@ -236,6 +205,7 @@ function ContactFormInner({
 }: ContactFormInnerProps) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState<CountryCode>("US");
   const [phone, setPhone] = useState("");
   const [inquiryType, setInquiryType] = useState<InquiryType>(initialType);
   const [selectedInterest, setSelectedInterest] =
@@ -278,6 +248,14 @@ function ContactFormInner({
     }
   };
 
+  const handleCountryChange = (newCountry: CountryCode) => {
+    setSelectedCountry(newCountry);
+    if (touched.phone && phone.trim()) {
+      const res = validateInternationalPhoneNumber(phone, newCountry);
+      setErrors((prev) => ({ ...prev, phone: res.error }));
+    }
+  };
+
   const validateAll = (): FormErrors => {
     const nextErrors: FormErrors = {};
 
@@ -287,7 +265,7 @@ function ContactFormInner({
     const emailErr = validateEmail(email);
     if (emailErr) nextErrors.email = emailErr;
 
-    const phoneRes = validateUsPhoneNumber(phone);
+    const phoneRes = validateInternationalPhoneNumber(phone, selectedCountry);
     if (phoneRes.error) nextErrors.phone = phoneRes.error;
 
     if (!selectedInterest) {
@@ -310,11 +288,8 @@ function ContactFormInner({
       const err = validateEmail(email);
       setErrors((prev) => ({ ...prev, email: err }));
     } else if (field === "phone") {
-      const res = validateUsPhoneNumber(phone);
+      const res = validateInternationalPhoneNumber(phone, selectedCountry);
       setErrors((prev) => ({ ...prev, phone: res.error }));
-      if (res.formatted && !res.error) {
-        setPhone(res.formatted);
-      }
     } else if (field === "message") {
       const err = validateMessage(message);
       setErrors((prev) => ({ ...prev, message: err }));
@@ -357,12 +332,6 @@ function ContactFormInner({
     setIsSubmitting(true);
     setErrors({});
 
-    // Normalizing phone format on submission
-    const phoneRes = validateUsPhoneNumber(phone);
-    if (phoneRes.formatted) {
-      setPhone(phoneRes.formatted);
-    }
-
     // Client-side simulation submission (no network calls, no storage)
     setTimeout(() => {
       setIsSubmitting(false);
@@ -374,6 +343,7 @@ function ContactFormInner({
     setFullName("");
     setEmail("");
     setPhone("");
+    setSelectedCountry("US");
     setInquiryType(initialType);
     setSelectedInterest(initialInterest);
     setBillingPreference(initialBilling);
@@ -563,39 +533,86 @@ function ContactFormInner({
             </div>
 
             <div>
-              <label
-                htmlFor="contact-phone"
-                className="block font-mono text-[11px] font-semibold tracking-[0.16em] text-graphite uppercase"
-              >
-                Phone Number <span className="text-forest">*</span>
-              </label>
-              <input
-                ref={phoneRef}
-                id="contact-phone"
-                name="phone"
-                type="tel"
-                autoComplete="tel"
-                required
-                value={phone}
-                onChange={(e) => {
-                  setPhone(e.target.value);
-                  if (touched.phone) {
-                    const res = validateUsPhoneNumber(e.target.value);
-                    setErrors((prev) => ({ ...prev, phone: res.error }));
-                  }
-                }}
-                onBlur={() => handleBlur("phone")}
-                placeholder="(303) 555-0123"
-                aria-invalid={Boolean(errors.phone)}
-                aria-describedby={
-                  errors.phone ? "contact-phone-error" : undefined
-                }
-                className={`mt-2 h-12 w-full border bg-ivory px-4 text-sm text-graphite placeholder:text-graphite-muted/50 focus:outline-none ${
-                  errors.phone
-                    ? "border-red-700 focus:border-red-800"
-                    : "border-graphite/25 focus:border-forest"
-                }`}
-              />
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="contact-phone"
+                  className="block font-mono text-[11px] font-semibold tracking-[0.16em] text-graphite uppercase"
+                >
+                  Phone Number <span className="text-forest">*</span>
+                </label>
+                <span className="font-mono text-[10px] tracking-[0.14em] text-graphite-muted uppercase">
+                  International Support
+                </span>
+              </div>
+
+              <div className="mt-2 grid grid-cols-1 sm:grid-cols-12 gap-2">
+                {/* Accessible Country/Region Selector */}
+                <div className="sm:col-span-5">
+                  <label htmlFor="contact-country" className="sr-only">
+                    Select Country or Region Code
+                  </label>
+                  <select
+                    id="contact-country"
+                    name="country"
+                    value={selectedCountry}
+                    onChange={(e) =>
+                      handleCountryChange(e.target.value as CountryCode)
+                    }
+                    aria-label="Country or Region Code"
+                    className="h-12 w-full border border-graphite/25 bg-ivory px-3 text-xs sm:text-sm text-graphite focus:border-forest focus:outline-none"
+                  >
+                    <optgroup label="Popular Countries">
+                      {POPULAR_COUNTRIES.map((c) => (
+                        <option key={`pop-${c.code}`} value={c.code}>
+                          {c.name} ({c.callingCode})
+                        </option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="All Countries & Territories">
+                      {ALL_COUNTRIES.map((c) => (
+                        <option key={c.code} value={c.code}>
+                          {c.name} ({c.callingCode})
+                        </option>
+                      ))}
+                    </optgroup>
+                  </select>
+                </div>
+
+                {/* Phone Number Input */}
+                <div className="sm:col-span-7">
+                  <input
+                    ref={phoneRef}
+                    id="contact-phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    required
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      if (touched.phone) {
+                        const res = validateInternationalPhoneNumber(
+                          e.target.value,
+                          selectedCountry
+                        );
+                        setErrors((prev) => ({ ...prev, phone: res.error }));
+                      }
+                    }}
+                    onBlur={() => handleBlur("phone")}
+                    placeholder={getSamplePlaceholder(selectedCountry)}
+                    aria-invalid={Boolean(errors.phone)}
+                    aria-describedby={
+                      errors.phone ? "contact-phone-error" : undefined
+                    }
+                    className={`h-12 w-full border bg-ivory px-4 text-sm text-graphite placeholder:text-graphite-muted/50 focus:outline-none ${
+                      errors.phone
+                        ? "border-red-700 focus:border-red-800"
+                        : "border-graphite/25 focus:border-forest"
+                    }`}
+                  />
+                </div>
+              </div>
+
               {errors.phone && (
                 <p
                   id="contact-phone-error"

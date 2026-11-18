@@ -144,6 +144,64 @@ export const SITE_META = {
     "AMIT ATHLETIC CLUB is a fictional fitness brand created as a portfolio demonstration. No physical club, memberships, or services are offered.",
 } as const;
 
+export interface RouteEditorialMeta {
+  route: string;
+  number: string;
+  pageTitle: string;
+  eyebrow: string;
+}
+
+export const ROUTE_EDITORIAL_MAP: Record<string, RouteEditorialMeta> = {
+  "/": {
+    route: "/",
+    number: "01",
+    pageTitle: "Home",
+    eyebrow: "01 / ALL-ROUND ATHLETIC CLUB",
+  },
+  "/about": {
+    route: "/about",
+    number: "02",
+    pageTitle: "About",
+    eyebrow: "02 / THE CLUB & PHILOSOPHY",
+  },
+  "/programs": {
+    route: "/programs",
+    number: "03",
+    pageTitle: "Programs",
+    eyebrow: "03 / PROGRAMS & TRAINING",
+  },
+  "/memberships": {
+    route: "/memberships",
+    number: "04",
+    pageTitle: "Memberships",
+    eyebrow: "04 / MEMBERSHIP PLANS & ACCESS",
+  },
+  "/trainers": {
+    route: "/trainers",
+    number: "05",
+    pageTitle: "Trainers",
+    eyebrow: "05 / MEET YOUR COACHES",
+  },
+  "/contact": {
+    route: "/contact",
+    number: "06",
+    pageTitle: "Contact",
+    eyebrow: "06 / CONTACT & INQUIRIES",
+  },
+};
+
+export function getRouteEditorialMeta(pathname: string): RouteEditorialMeta {
+  const normalized = pathname === "" ? "/" : pathname;
+  return (
+    ROUTE_EDITORIAL_MAP[normalized] || {
+      route: normalized,
+      number: "01",
+      pageTitle: "Club",
+      eyebrow: `01 / ${SITE_META.brandName}`,
+    }
+  );
+}
+
 export const NAV_ITEMS: NavItem[] = [
   { index: "01", label: "Home", href: "/" },
   { index: "02", label: "About", href: "/about" },

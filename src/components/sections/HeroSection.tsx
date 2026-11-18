@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { HERO_LEDGER, SITE_META } from "@/data/siteContent";
+import { HERO_LEDGER, ROUTE_EDITORIAL_MAP, SITE_META } from "@/data/siteContent";
 
 export function HeroSection() {
   return (
@@ -17,11 +17,11 @@ export function HeroSection() {
               className="inline-block h-2 w-2 bg-forest"
             />
             <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-forest">
-              {SITE_META.tagline}
+              {ROUTE_EDITORIAL_MAP["/"].eyebrow}
             </span>
           </div>
           <p className="hidden sm:block text-xs uppercase tracking-[0.18em] text-graphite-soft">
-            All-Round Athletic Club
+            {SITE_META.tagline}
           </p>
         </div>
 

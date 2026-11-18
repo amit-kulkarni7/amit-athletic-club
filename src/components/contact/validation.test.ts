@@ -3,6 +3,7 @@ import {
   validateFullName,
   validateEmail,
   validateUsPhoneNumber,
+  validateInternationalPhoneNumber,
   validateMessage,
   resolveInitialType,
   resolveInitialInterest,
@@ -12,7 +13,10 @@ import {
   MEMBERSHIP_TIERS,
   calculateAnnualDiscount,
   ANNUAL_DISCOUNT_PERCENT,
+  ROUTE_EDITORIAL_MAP,
+  getRouteEditorialMeta,
 } from "../../data/siteContent";
+import { ALL_COUNTRIES, POPULAR_COUNTRIES, getSamplePlaceholder } from "./countries";
 
 console.log("Starting AMIT ATHLETIC CLUB automated test suite...");
 
@@ -58,73 +62,119 @@ console.log("✓ Full Name validation passed");
 }
 console.log("✓ Email validation passed");
 
-// 3. US Phone Number Tests (NANP compliant)
+// 3. International Phone Number Validation Tests (libphonenumber-js/max)
 {
-  // Valid formats
-  const res1 = validateUsPhoneNumber("(303) 555-0123");
-  assert.strictEqual(res1.error, undefined);
-  assert.strictEqual(res1.formatted, "(303) 555-0123");
+  // A. Valid US numbers (national and international format)
+  const usRes1 = validateInternationalPhoneNumber("(213) 373-4253", "US");
+  assert.strictEqual(usRes1.error, undefined);
+  assert.strictEqual(usRes1.e164, "+12133734253");
+  assert.strictEqual(usRes1.country, "US");
 
-  const res2 = validateUsPhoneNumber("303-555-0123");
-  assert.strictEqual(res2.error, undefined);
-  assert.strictEqual(res2.formatted, "(303) 555-0123");
+  const usRes2 = validateInternationalPhoneNumber("+1 213 373 4253", "US");
+  assert.strictEqual(usRes2.error, undefined);
+  assert.strictEqual(usRes2.e164, "+12133734253");
 
-  const res3 = validateUsPhoneNumber("+1 303 555 0123");
-  assert.strictEqual(res3.error, undefined);
-  assert.strictEqual(res3.formatted, "(303) 555-0123");
+  // B. Valid Indian numbers
+  const inRes1 = validateInternationalPhoneNumber("98765 43210", "IN");
+  assert.strictEqual(inRes1.error, undefined);
+  assert.strictEqual(inRes1.e164, "+919876543210");
+  assert.strictEqual(inRes1.country, "IN");
 
-  const res4 = validateUsPhoneNumber("3035550123");
-  assert.strictEqual(res4.error, undefined);
-  assert.strictEqual(res4.formatted, "(303) 555-0123");
+  const inRes2 = validateInternationalPhoneNumber("+91 98765 43210", "IN");
+  assert.strictEqual(inRes2.error, undefined);
+  assert.strictEqual(inRes2.e164, "+919876543210");
 
-  const res5 = validateUsPhoneNumber("720.555.9876");
-  assert.strictEqual(res5.error, undefined);
-  assert.strictEqual(res5.formatted, "(720) 555-9876");
+  // C. Valid UK numbers
+  const ukRes1 = validateInternationalPhoneNumber("07911 123456", "GB");
+  assert.strictEqual(ukRes1.error, undefined);
+  assert.strictEqual(ukRes1.e164, "+447911123456");
 
-  // Invalid formats
-  assert.ok(validateUsPhoneNumber("").error !== undefined, "Empty phone should fail");
-  assert.ok(validateUsPhoneNumber("   ").error !== undefined, "Whitespace phone should fail");
-  assert.ok(validateUsPhoneNumber("12345").error !== undefined, "Short phone should fail");
+  const ukRes2 = validateInternationalPhoneNumber("+44 7911 123456", "GB");
+  assert.strictEqual(ukRes2.error, undefined);
+  assert.strictEqual(ukRes2.e164, "+447911123456");
+
+  // D. Valid German numbers
+  const deRes1 = validateInternationalPhoneNumber("030 12345678", "DE");
+  assert.strictEqual(deRes1.error, undefined);
+  assert.strictEqual(deRes1.e164, "+493012345678");
+
+  const deRes2 = validateInternationalPhoneNumber("+49 30 12345678", "DE");
+  assert.strictEqual(deRes2.error, undefined);
+  assert.strictEqual(deRes2.e164, "+493012345678");
+
+  // E. Valid Australian numbers
+  const auRes1 = validateInternationalPhoneNumber("0412 345 678", "AU");
+  assert.strictEqual(auRes1.error, undefined);
+  assert.strictEqual(auRes1.e164, "+61412345678");
+
+  // F. Valid Canadian numbers (sharing calling code +1 with US)
+  const caRes1 = validateInternationalPhoneNumber("(416) 555-0123", "CA");
+  assert.strictEqual(caRes1.error, undefined);
+  assert.strictEqual(caRes1.e164, "+14165550123");
+
+  // G. Input starts with "+" differing from selected default country
+  // User selected US (+1), but enters Indian (+91) or UK (+44) international number
+  const crossCountryIn = validateInternationalPhoneNumber("+91 98765 43210", "US");
+  assert.strictEqual(crossCountryIn.error, undefined);
+  assert.strictEqual(crossCountryIn.e164, "+919876543210");
+  assert.strictEqual(crossCountryIn.country, "IN");
+
+  const crossCountryGb = validateInternationalPhoneNumber("+44 7911 123456", "US");
+  assert.strictEqual(crossCountryGb.error, undefined);
+  assert.strictEqual(crossCountryGb.e164, "+447911123456");
+
+  // H. Country selection changes
+  // A number valid in India should fail under US national parsing
   assert.ok(
-    validateUsPhoneNumber("303555012345").error !== undefined,
-    "Long phone should fail"
+    validateInternationalPhoneNumber("98765 43210", "US").error !== undefined,
+    "Indian 10-digit mobile without country code should fail if US is selected"
   );
   assert.ok(
-    validateUsPhoneNumber("abcdefghij").error !== undefined,
-    "Non-digit phone should fail"
+    validateInternationalPhoneNumber("98765 43210", "IN").error === undefined,
+    "Indian 10-digit mobile should pass when IN is selected"
   );
 
-  // NANP rule: Area code cannot start with 0 or 1
+  // I. Invalid and incomplete numbers
   assert.ok(
-    validateUsPhoneNumber("(012) 555-0123").error?.includes("0 or 1"),
-    "Area code starting with 0 should fail"
+    validateInternationalPhoneNumber("", "US").error === "Please enter your phone number.",
+    "Empty phone should prompt for phone number"
   );
   assert.ok(
-    validateUsPhoneNumber("(123) 456-7890").error?.includes("0 or 1"),
-    "Area code starting with 1 should fail"
+    validateInternationalPhoneNumber("   ", "US").error === "Please enter your phone number.",
+    "Whitespace phone should prompt for phone number"
+  );
+  assert.ok(
+    validateInternationalPhoneNumber("123", "US").error !== undefined,
+    "Incomplete number should fail"
+  );
+  assert.ok(
+    validateInternationalPhoneNumber("+999 12345", "US").error !== undefined,
+    "Invalid calling code should fail"
+  );
+  assert.ok(
+    validateInternationalPhoneNumber("not-a-number", "US").error !== undefined,
+    "Alphabetic text should fail"
+  );
+  assert.ok(
+    validateInternationalPhoneNumber("0000000000", "US").error !== undefined,
+    "Repeated zero digits should fail"
   );
 
-  // NANP rule: Exchange code cannot start with 0 or 1
-  assert.ok(
-    validateUsPhoneNumber("(303) 055-0123").error?.includes("0 or 1"),
-    "Exchange code starting with 0 should fail"
-  );
-  assert.ok(
-    validateUsPhoneNumber("(303) 155-0123").error?.includes("0 or 1"),
-    "Exchange code starting with 1 should fail"
-  );
+  // J. Backward-compatible validateUsPhoneNumber wrapper
+  const usCompat = validateUsPhoneNumber("(213) 373-4253");
+  assert.strictEqual(usCompat.error, undefined);
+  assert.strictEqual(usCompat.e164, "+12133734253");
 
-  // Repeated digit pattern rejection
-  assert.ok(
-    validateUsPhoneNumber("0000000000").error !== undefined,
-    "All 0s should fail"
-  );
-  assert.ok(
-    validateUsPhoneNumber("5555555555").error !== undefined,
-    "All 5s should fail"
-  );
+  // K. Countries registry verification
+  assert.ok(ALL_COUNTRIES.length >= 240, "All countries should include > 240 territories");
+  assert.ok(POPULAR_COUNTRIES.length >= 6, "Popular countries should include >= 6 entries");
+  assert.strictEqual(getSamplePlaceholder("US"), "(213) 373-4253");
+  assert.strictEqual(getSamplePlaceholder("IN"), "98765 43210");
+  assert.strictEqual(getSamplePlaceholder("GB"), "07911 123456");
+  assert.strictEqual(getSamplePlaceholder("DE"), "030 12345678");
+  assert.strictEqual(getSamplePlaceholder("AU"), "0412 345 678");
 }
-console.log("✓ Phone Number validation passed");
+console.log("✓ International Phone Number validation passed");
 
 // 4. Message Tests
 {
@@ -220,5 +270,43 @@ console.log("✓ Membership pricing and annual discount math verified");
   assert.strictEqual(resolveInitialBilling(null), "monthly");
 }
 console.log("✓ Inquiry URL parameter resolution verified");
+
+// 7. Route-to-Number Dynamic Editorial Page Mapping Tests
+{
+  const expectedMappings = [
+    { route: "/", number: "01", page: "Home", prefix: "01 /" },
+    { route: "/about", number: "02", page: "About", prefix: "02 /" },
+    { route: "/programs", number: "03", page: "Programs", prefix: "03 /" },
+    { route: "/memberships", number: "04", page: "Memberships", prefix: "04 /" },
+    { route: "/trainers", number: "05", page: "Trainers", prefix: "05 /" },
+    { route: "/contact", number: "06", page: "Contact", prefix: "06 /" },
+  ];
+
+  for (const item of expectedMappings) {
+    const meta = getRouteEditorialMeta(item.route);
+    assert.strictEqual(
+      meta.number,
+      item.number,
+      `Route ${item.route} must resolve to number ${item.number}`
+    );
+    assert.ok(
+      meta.eyebrow.startsWith(item.prefix),
+      `Route ${item.route} eyebrow '${meta.eyebrow}' must start with '${item.prefix}'`
+    );
+    assert.strictEqual(
+      meta.pageTitle,
+      item.page,
+      `Route ${item.route} title must be '${item.page}'`
+    );
+
+    // Direct lookup in ROUTE_EDITORIAL_MAP
+    assert.strictEqual(ROUTE_EDITORIAL_MAP[item.route].number, item.number);
+  }
+
+  // Edge cases
+  assert.strictEqual(getRouteEditorialMeta("").number, "01");
+  assert.strictEqual(getRouteEditorialMeta("/unknown-route").number, "01");
+}
+console.log("✓ Dynamic editorial route-to-number mapping verified for all 6 routes");
 
 console.log("\nAll automated regression and unit tests passed successfully!");

@@ -10,6 +10,7 @@
     "test": "npx tsx src/components/contact/validation.test.ts"
   },
   "dependencies": {
+    "libphonenumber-js": "^1.13.16",
     "next": "16.4.5",
     "react": "19.3.0",
     "react-dom": "19.3.0"

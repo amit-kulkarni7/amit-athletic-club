@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ProgramsExplorer } from "@/components/programs/ProgramsExplorer";
-import { SITE_META } from "@/data/siteContent";
+import { ROUTE_EDITORIAL_MAP } from "@/data/siteContent";
 
 export const metadata: Metadata = {
   title: "Training Programs & Weekly Schedule",
@@ -24,15 +24,9 @@ export default function ProgramsPage() {
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-graphite/15 pb-4">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
-                01 / TRAINING DISCIPLINES & SCHEDULE
-              </span>
-              <span className="hidden h-1 w-1 rounded-full bg-forest sm:inline-block" />
-              <span className="hidden font-mono text-xs tracking-[0.16em] text-graphite-muted uppercase sm:inline-block">
-                {SITE_META.conceptLocation}
-              </span>
-            </div>
+            <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
+              {ROUTE_EDITORIAL_MAP["/programs"].eyebrow}
+            </span>
             <a
               href="#weekly-schedule"
               className="font-mono text-xs font-semibold tracking-[0.16em] text-forest uppercase transition-colors hover:text-graphite"
