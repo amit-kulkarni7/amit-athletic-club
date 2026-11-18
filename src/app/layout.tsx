@@ -19,7 +19,14 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
+  : process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? new URL(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`)
+    : undefined;
+
 export const metadata: Metadata = {
+  metadataBase: siteUrl,
   title: {
     default: "AMIT ATHLETIC CLUB — Strength. Movement. Intention.",
     template: "%s | AMIT ATHLETIC CLUB",
@@ -34,6 +41,16 @@ export const metadata: Metadata = {
     "Small-Group Training",
     "Portfolio Project",
   ],
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     title: "AMIT ATHLETIC CLUB — Strength. Movement. Intention.",
     description:

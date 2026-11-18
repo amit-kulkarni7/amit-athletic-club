@@ -72,17 +72,6 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-ivory/95 backdrop-blur-md border-b border-stone">
-      {/* Top micro-bar with concept location and portfolio disclosure badge */}
-      <div className="border-b border-stone/60 bg-ivory-muted/70 px-4 sm:px-6 lg:px-12 py-1.5">
-        <div className="mx-auto max-w-[1360px] flex items-center justify-between text-[11px] tracking-[0.16em] uppercase text-graphite-soft">
-          <span>{SITE_META.conceptLocation}</span>
-          <span className="hidden sm:inline">
-            Portfolio Concept — Strength · Movement · Intention
-          </span>
-          <span className="sm:hidden">Portfolio Concept</span>
-        </div>
-      </div>
-
       {/* Main Navigation Bar */}
       <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-6 xl:px-12">
         <div className="flex h-16 sm:h-20 items-center justify-between gap-3">
@@ -104,7 +93,7 @@ export function Navbar() {
                 {SITE_META.brandName}
               </span>
               <span className="mt-1 text-[10px] tracking-[0.16em] xl:tracking-[0.18em] uppercase text-graphite-soft leading-none">
-                Denver · Athletic Club
+                Athletic Club
               </span>
             </span>
           </Link>
@@ -205,7 +194,7 @@ export function Navbar() {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <div className="mx-auto max-w-[1360px] px-4 sm:px-6 py-6 flex flex-col justify-between min-h-[calc(100dvh-6.25rem)] overflow-y-auto">
+        <div className="mx-auto max-w-[1360px] px-4 sm:px-6 py-6 flex flex-col justify-between min-h-[calc(100dvh-5rem)] overflow-y-auto">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-forest mb-3">
               Club Directory — Pages
@@ -271,7 +260,7 @@ export function Navbar() {
 
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs text-graphite-soft">
               <span className="font-medium uppercase tracking-[0.14em]">
-                {SITE_META.conceptLocation}
+                {SITE_META.brandName}
               </span>
               <span className="font-serif italic text-sm text-graphite">
                 {SITE_META.tagline}

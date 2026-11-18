@@ -72,17 +72,24 @@ amit-athletic-club/
 │   │   ├── memberships/page.tsx            # Memberships & pricing page
 │   │   ├── programs/page.tsx               # Programs & schedule page
 │   │   ├── trainers/page.tsx               # Coaching & methodology page
-│   │   ├── favicon.ico                     # Club favicon icon
+│   │   ├── apple-icon.png                  # 180×180 Apple touch icon
+│   │   ├── favicon.ico                     # Multi-res (16/32/48px) custom AAC favicon
 │   │   ├── globals.css                     # Tailwind CSS v4 design tokens & theme
-│   │   ├── layout.tsx                      # Root layout, fonts, skip link, metadata
-│   │   └── page.tsx                        # Club homepage
+│   │   ├── icon.png                        # 32×32 PNG application icon
+│   │   ├── icon.svg                        # Scalable vector AAC brand icon
+│   │   ├── layout.tsx                      # Root layout, fonts, metadata, icons
+│   │   ├── opengraph-image.png             # 1200×630 branded OpenGraph preview card
+│   │   ├── page.tsx                        # Club homepage
+│   │   ├── robots.ts                       # Dynamic robots.txt metadata route
+│   │   ├── sitemap.ts                      # Dynamic sitemap.xml indexing 6 public routes
+│   │   └── twitter-image.png               # Twitter card summary large image
 │   ├── components/
 │   │   ├── contact/
 │   │   │   ├── ContactForm.tsx             # Interactive inquiry form & simulation state
 │   │   │   └── validation.test.ts          # Automated validation test suite
 │   │   ├── layout/
-│   │   │   ├── Footer.tsx                  # Semantic footer with disclosures & sitemap
-│   │   │   └── Navbar.tsx                  # Accessible responsive navbar with mobile menu
+│   │   │   ├── Footer.tsx                  # Simplified semantic footer with disclosure
+│   │   │   └── Navbar.tsx                  # Clean header without top utility bar
 │   │   ├── memberships/
 │   │   │   └── MembershipsInteractive.tsx  # Billing toggle, calculations & comparison
 │   │   ├── programs/
@@ -98,7 +105,11 @@ amit-athletic-club/
 │   └── data/
 │       └── siteContent.ts                  # Centralized, strongly-typed content data source
 ├── public/
-│   └── images/                             # 13 authentic, licensed Unsplash photographs
+│   ├── apple-icon.png                      # Direct static Apple touch icon
+│   ├── favicon.ico                         # Direct static AAC favicon
+│   ├── icon.png                            # Direct static 32×32 icon
+│   ├── icon.svg                            # Direct static vector icon
+│   └── images/                             # 13 authentic photos + og-aac-preview.png
 ├── IMAGE_CREDITS.md                        # Complete photographic licensing & attribution log
 ├── eslint.config.mjs                       # Flat ESLint 9 configuration
 ├── next.config.ts                          # Next.js configuration & Turbopack CSS rules
@@ -177,6 +188,12 @@ All site copy, navigation links, program details, schedules, pricing tiers, and 
 
 ### 4. Zero-Vulnerability Dependency Chain
 The project dependencies are completely audited with `npm audit` and `npm audit --omit=dev`, reporting **0 vulnerabilities**.
+
+### 5. Branded Identity, Social Sharing & SEO Infrastructure
+- **Custom AAC Browser Favicon:** Designed with brand Graphite (`#1C211E`) background and Ivory (`#F5F3EE`) serif monogram, replacing the default Next.js logo with multi-res `favicon.ico` (16, 32, 48px), vector `icon.svg`, and 180×180 `apple-icon.png`.
+- **Branded OpenGraph Preview Image:** 1200×630 editorial graphic showcasing the AAC monogram, wordmark, tagline, and four training disciplines in Next.js App Router metadata format.
+- **Dynamic SEO Metadata:** Native `src/app/robots.ts` and `src/app/sitemap.ts` metadata routes dynamically indexing all six public pages with weekly change frequency and prioritization.
+- **Vercel Production Domain Readiness:** Centralized `NEXT_PUBLIC_SITE_URL` and `VERCEL_PROJECT_PRODUCTION_URL` configuration for automatic canonical and sitemap URL resolution upon deployment.
 
 ---
 

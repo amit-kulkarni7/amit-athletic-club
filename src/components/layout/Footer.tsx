@@ -4,11 +4,11 @@ import { NAV_ITEMS, PROGRAMS, SITE_META } from "@/data/siteContent";
 export function Footer() {
   return (
     <footer className="bg-graphite text-ivory border-t border-stone/30">
-      <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-12 py-12 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-12 py-12 sm:py-16">
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 pb-10 sm:pb-12 border-b border-stone/25">
-          {/* Brand Identity Column (4 cols) */}
-          <div className="col-span-2 lg:col-span-4 space-y-4 sm:space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-10 sm:pb-12 border-b border-stone/20">
+          {/* Brand Identity Column (5 cols) */}
+          <div className="lg:col-span-5 space-y-4">
             <Link
               href="/"
               className="inline-flex items-center gap-3.5 text-ivory group"
@@ -30,17 +30,22 @@ export function Footer() {
               </span>
             </Link>
 
-            <p className="text-xs sm:text-sm leading-relaxed text-stone max-w-sm">
+            <p className="text-xs sm:text-sm leading-relaxed text-stone max-w-md">
               A contemporary athletic club concept uniting progressive barbell
               strength, functional conditioning, guided recovery, and attentive
               small-group coaching.
             </p>
+
+            {/* Single subtle concept location reference */}
+            <p className="pt-1 text-xs uppercase tracking-[0.16em] text-stone">
+              Denver, Colorado — Concept Location
+            </p>
           </div>
 
-          {/* Club Pages Navigation (2 cols) */}
-          <div className="lg:col-span-2 space-y-3.5">
+          {/* Club Pages Navigation (3 cols) */}
+          <div className="lg:col-span-3 space-y-3">
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-stone">
-              Pages
+              Club Directory
             </h2>
             <ul className="space-y-2 text-xs">
               {NAV_ITEMS.map((item) => (
@@ -61,10 +66,10 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Disciplines Quick Links (3 cols) */}
-          <div className="lg:col-span-3 space-y-3.5">
+          {/* Disciplines Quick Links (4 cols) */}
+          <div className="lg:col-span-4 space-y-3">
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-stone">
-              Training Programs
+              Training Disciplines
             </h2>
             <ul className="space-y-2 text-xs">
               {PROGRAMS.map((program) => (
@@ -87,63 +92,25 @@ export function Footer() {
               </li>
             </ul>
           </div>
-
-          {/* Concept Location & Hours (3 cols) */}
-          <div className="col-span-2 lg:col-span-3 space-y-3.5">
-            <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-stone">
-              Concept Location
-            </h2>
-            <div className="space-y-1 text-xs text-ivory/90">
-              <p className="font-semibold uppercase tracking-[0.14em]">
-                {SITE_META.conceptLocation}
-              </p>
-              <p className="text-stone">{SITE_META.conceptMarketNote}</p>
-            </div>
-
-            <div className="pt-2 space-y-1.5 text-xs">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-stone">
-                Illustrative Sample Hours
-              </p>
-              {SITE_META.conceptHours.map((slot) => (
-                <p
-                  key={slot.days}
-                  className="flex items-center justify-between gap-2 text-ivory/85"
-                >
-                  <span>{slot.days}</span>
-                  <span className="text-stone">{slot.hours}</span>
-                </p>
-              ))}
-            </div>
-          </div>
         </div>
 
-        {/* Portfolio Demonstration Disclosure Box */}
+        {/* Fictional Business Disclosure Note */}
         <div
           role="note"
-          aria-label="Portfolio demonstration disclosure"
-          className="mt-8 border border-stone/30 bg-forest/25 p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+          aria-label="Fictional brand disclosure"
+          className="mt-8 border border-stone/25 bg-forest/20 p-4 sm:p-5"
         >
-          <div className="space-y-1">
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-stone">
-              Portfolio Demonstration Disclosure
-            </p>
-            <p className="text-xs sm:text-sm leading-relaxed text-ivory">
-              {SITE_META.disclosure}
-            </p>
-          </div>
-          <span className="shrink-0 text-[11px] uppercase tracking-[0.18em] text-stone border border-stone/40 px-3 py-1.5 self-start lg:self-center">
-            GYM-M3 · Polished Edition
-          </span>
+          <p className="text-xs leading-relaxed text-ivory/95">
+            AMIT ATHLETIC CLUB is a fictional fitness brand created as a
+            portfolio demonstration. No physical club or services are offered.
+          </p>
         </div>
 
-        {/* Bottom Copyright & Meta Line */}
+        {/* Bottom Copyright Bar */}
         <div className="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-stone">
-          <p>
-            © 2026 {SITE_META.brandName}. Software Engineering Portfolio
-            Project.
-          </p>
-          <p className="uppercase tracking-[0.16em]">
-            All Pricing Illustrative USD ($) · Photography via Unsplash License
+          <p>© 2026 {SITE_META.brandName}. All rights reserved.</p>
+          <p className="font-serif italic text-xs normal-case tracking-normal text-stone">
+            {SITE_META.tagline}
           </p>
         </div>
       </div>

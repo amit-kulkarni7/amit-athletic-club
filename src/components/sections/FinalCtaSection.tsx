@@ -13,7 +13,7 @@ export function FinalCtaSection() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-end">
             <div className="lg:col-span-8 space-y-4">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-stone">
-                {SITE_META.conceptLocation} · {SITE_META.tagline}
+                {SITE_META.tagline}
               </p>
 
               <h2

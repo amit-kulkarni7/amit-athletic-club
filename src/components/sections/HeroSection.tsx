@@ -21,7 +21,7 @@ export function HeroSection() {
             </span>
           </div>
           <p className="hidden sm:block text-xs uppercase tracking-[0.18em] text-graphite-soft">
-            {SITE_META.conceptLocation}
+            All-Round Athletic Club
           </p>
         </div>
 
@@ -45,10 +45,10 @@ export function HeroSection() {
               </h1>
 
               <p className="mt-4 sm:mt-8 max-w-xl text-sm sm:text-lg leading-relaxed text-graphite-soft">
-                A calm, thoughtfully equipped fitness club concept in Denver
-                designed for both first-time lifters and experienced athletes.
-                Bringing together barbell strength, functional conditioning,
-                guided mobility, and small-group coaching under one roof.
+                A calm, thoughtfully equipped fitness club concept designed for
+                both first-time lifters and experienced athletes. Bringing
+                together barbell strength, functional conditioning, guided
+                mobility, and small-group coaching under one roof.
               </p>
             </div>
 

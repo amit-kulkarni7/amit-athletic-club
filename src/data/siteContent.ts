@@ -167,8 +167,8 @@ export const HERO_LEDGER = [
     value: "Natural Light, Spacious Floor, Unhurried Pace",
   },
   {
-    label: "Concept Location",
-    value: "Denver, Colorado — Concept Location",
+    label: "Training Standard",
+    value: "Movement Mastery, Attentive Coaching, Capped Access",
   },
 ] as const;
 
