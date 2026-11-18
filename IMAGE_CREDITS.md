@@ -1,4 +1,4 @@
-# Image Credits & Licensing — AMIT ATHLETIC CLUB (GYM-M1 & GYM-M2)
+# Image Credits & Licensing — AMIT ATHLETIC CLUB
 
 All photography used in **AMIT ATHLETIC CLUB** is authentic, professionally photographed imagery sourced from [Unsplash](https://unsplash.com) and served locally from `public/images/` via `next/image`.
 
