@@ -2,6 +2,9 @@
 
 **AMIT ATHLETIC CLUB** is a fictional fitness club concept set in Denver, Colorado, built as an editorial, accessible, and responsive multi-page software-engineering portfolio website using Next.js, TypeScript, and Tailwind CSS.
 
+- **Live Website:** [https://amit-athletic-club.vercel.app/](https://amit-athletic-club.vercel.app/)
+- **Source Repository:** [https://github.com/amit-kulkarni7/amit-athletic-club](https://github.com/amit-kulkarni7/amit-athletic-club)
+
 > **Portfolio Disclosure:** AMIT ATHLETIC CLUB is a fictional brand created strictly for software engineering and design demonstration purposes. No physical club, memberships, paid services, or commercial operations exist. All pricing is illustrative USD (`$`), all schedules and coaching profiles are conceptual, and all form submissions run client-side simulations without transmitting or saving user data.
 
 ---
@@ -108,7 +111,7 @@ amit-athletic-club/
 ### Installation & Local Server
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/amit-kulkarni7/amit-athletic-club.git
 cd amit-athletic-club
 npm install
 npm run dev
@@ -172,9 +175,10 @@ No backend API, database, authentication, or email dispatch is connected. Submit
 
 ---
 
-## Vercel Deployment Notes
+## Deployment (Vercel)
 
+- **Production URL:** [https://amit-athletic-club.vercel.app/](https://amit-athletic-club.vercel.app/)
 - **Framework Preset:** Next.js
 - **Build Command:** `npm run build`
 - **Output Directory:** `.next`
-- **Environment Variables:** None required for core functionality. Once deployed to a final custom domain, canonical metadata, OpenGraph URLs, `robots.txt`, and `sitemap.xml` automatically resolve from Vercel's `VERCEL_PROJECT_PRODUCTION_URL` or an optional `NEXT_PUBLIC_SITE_URL` environment variable.
+- **Environment Variables:** None required. Production OpenGraph/Twitter image URLs, `robots.txt`, and `sitemap.xml` automatically resolve from Vercel's `VERCEL_PROJECT_PRODUCTION_URL` (or an optional `NEXT_PUBLIC_SITE_URL` override for a custom domain).
