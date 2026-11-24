@@ -368,7 +368,7 @@ function ContactFormInner({
           </span>
         </div>
         <p className="mt-2 text-xs leading-relaxed text-graphite-muted sm:text-sm">
-          This inquiry form is an interactive client-side prototype. Entries are validated locally in your browser and are neither transmitted nor stored.
+          This is a demonstration inquiry form. Please use sample details. Your entries are validated in your browser and are not sent or saved.
         </p>
       </div>
 
