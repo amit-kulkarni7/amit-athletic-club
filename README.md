@@ -87,8 +87,8 @@ amit-athletic-club/
 
 ### Prerequisites
 
-- Node.js 20 LTS or newer (verified with Node v26.4.0)
-- npm 10+ (verified with npm 11.17.0)
+- Node.js `24.x` (configured via `package.json` `engines.node`; verified on `v24.22.3`)
+- npm 10+
 
 ### Installation & Local Server
 
