@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="bg-ivory text-graphite">
-      {/* Page Header */}
       <section
         aria-labelledby="contact-hero-heading"
         className="border-b border-graphite/15 pt-12 pb-16 sm:pt-16 sm:pb-20"
@@ -27,7 +26,7 @@ export default function ContactPage() {
             <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
               {ROUTE_EDITORIAL_MAP["/contact"].eyebrow}
             </span>
-            <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-muted uppercase">
+            <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-soft uppercase">
               Online Inquiry Form
             </span>
           </div>
@@ -45,7 +44,7 @@ export default function ContactPage() {
               </h1>
             </div>
             <div className="lg:col-span-4">
-              <p className="text-base leading-relaxed text-graphite-muted sm:text-lg">
+              <p className="text-base leading-relaxed text-graphite-soft sm:text-lg">
                 Explore our membership options, schedule a welcome orientation,
                 or ask our team about training programs and club spaces.
               </p>
@@ -63,7 +62,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start">
             {/* Left Column: Club Concept Info & Sample Hours */}
             <div className="space-y-8 lg:col-span-4">
-              <div className="border border-graphite/15 bg-ivory-warm p-6 sm:p-8">
+              <div className="border border-graphite/15 bg-ivory-muted p-6 sm:p-8">
                 <span className="font-mono text-xs font-semibold tracking-[0.18em] text-forest uppercase">
                   CLUB LOCATION
                 </span>
@@ -76,7 +75,7 @@ export default function ContactPage() {
                 <p className="mt-2 font-mono text-xs tracking-[0.14em] text-forest uppercase">
                   {SITE_META.conceptLocation}
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-graphite-muted">
+                <p className="mt-4 text-sm leading-relaxed text-graphite-soft">
                   AMIT ATHLETIC CLUB is a fictional fitness brand created as a
                   software-engineering portfolio project. To remain truthful, no
                   street address, telephone number, or live customer-service
@@ -84,7 +83,7 @@ export default function ContactPage() {
                 </p>
               </div>
 
-              <div className="border border-graphite/15 bg-ivory-warm p-6 sm:p-8">
+              <div className="border border-graphite/15 bg-ivory-muted p-6 sm:p-8">
                 <span className="font-mono text-xs font-semibold tracking-[0.18em] text-forest uppercase">
                   CLUB HOURS
                 </span>
@@ -95,13 +94,13 @@ export default function ContactPage() {
                       className="flex items-center justify-between gap-2"
                     >
                       <dt className="font-medium text-graphite">{item.days}</dt>
-                      <dd className="font-mono text-xs text-graphite-muted">
+                      <dd className="font-mono text-xs text-graphite-soft">
                         {item.hours}
                       </dd>
                     </div>
                   ))}
                 </dl>
-                <p className="mt-4 border-t border-graphite/15 pt-3 font-mono text-[11px] tracking-[0.12em] text-graphite-muted uppercase">
+                <p className="mt-4 border-t border-graphite/15 pt-3 font-mono text-[11px] tracking-[0.12em] text-graphite-soft uppercase">
                   Sample hours for concept demonstration
                 </p>
               </div>
@@ -111,7 +110,7 @@ export default function ContactPage() {
             <div className="lg:col-span-8">
               <Suspense
                 fallback={
-                  <div className="border border-graphite/15 bg-ivory-warm p-10 text-sm text-graphite-muted">
+                  <div className="border border-graphite/15 bg-ivory-muted p-10 text-sm text-graphite-soft">
                     Loading interactive inquiry form...
                   </div>
                 }

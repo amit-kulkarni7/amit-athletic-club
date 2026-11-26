@@ -47,17 +47,15 @@ export function ProgramsExplorer() {
 
   return (
     <div>
-      {/* Filter Bar & Programs Catalog */}
       <section
         aria-labelledby="programs-catalog-heading"
         className="border-b border-graphite/15 py-16 sm:py-24"
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-          {/* Interactive Filter Controls */}
           <div
             role="region"
             aria-label="Filter training programs"
-            className="mb-12 border border-graphite/15 bg-ivory-warm p-6 sm:p-8"
+            className="mb-12 border border-graphite/15 bg-ivory-muted p-6 sm:p-8"
           >
             <div className="flex flex-col justify-between gap-6 border-b border-graphite/15 pb-6 lg:flex-row lg:items-center">
               <div>
@@ -67,7 +65,7 @@ export function ProgramsExplorer() {
                 >
                   Filter Training Disciplines
                 </h2>
-                <p className="mt-1 text-sm text-graphite-muted">
+                <p className="mt-1 text-sm text-graphite-soft">
                   Narrow programs by focus area or experience level.
                 </p>
               </div>
@@ -92,9 +90,8 @@ export function ProgramsExplorer() {
             </div>
 
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12">
-              {/* Category Filter */}
               <div className="lg:col-span-7">
-                <span className="mb-2.5 block font-mono text-[11px] font-semibold tracking-[0.16em] text-graphite-muted uppercase">
+                <span className="mb-2.5 block font-mono text-[11px] font-semibold tracking-[0.16em] text-graphite-soft uppercase">
                   Discipline Category
                 </span>
                 <div
@@ -135,9 +132,8 @@ export function ProgramsExplorer() {
                 </div>
               </div>
 
-              {/* Experience Level Filter */}
               <div className="lg:col-span-5">
-                <span className="mb-2.5 block font-mono text-[11px] font-semibold tracking-[0.16em] text-graphite-muted uppercase">
+                <span className="mb-2.5 block font-mono text-[11px] font-semibold tracking-[0.16em] text-graphite-soft uppercase">
                   Experience Level
                 </span>
                 <div
@@ -180,11 +176,10 @@ export function ProgramsExplorer() {
             </div>
           </div>
 
-          {/* Empty State */}
           {filteredPrograms.length === 0 ? (
             <div
               role="status"
-              className="border border-graphite/15 bg-ivory-warm p-10 text-center sm:p-16"
+              className="border border-graphite/15 bg-ivory-muted p-10 text-center sm:p-16"
             >
               <span className="font-mono text-xs font-semibold tracking-[0.18em] text-forest uppercase">
                 NO DIRECT MATCH
@@ -193,30 +188,27 @@ export function ProgramsExplorer() {
                 No programs match &ldquo;{selectedCategory}&rdquo; at the{" "}
                 &ldquo;{selectedLevel}&rdquo; filter level.
               </h3>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-graphite-muted sm:text-base">
-                Our Mobility & Recovery sessions are designed as foundational,
-                accessible restoration for Beginner and Intermediate levels
-                rather than high-intensity advanced training. Reset the filters
-                to explore all four club disciplines.
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-graphite-soft sm:text-base">
+                Try selecting a different experience level or reset the active
+                filters to view all four club disciplines.
               </p>
               <div className="mt-7">
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="inline-flex h-11 items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-light"
+                  className="inline-flex h-11 items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-deep"
                 >
                   Reset All Filters
                 </button>
               </div>
             </div>
           ) : (
-            /* Program Detail Entries */
             <div className="space-y-12">
               {filteredPrograms.map((program) => (
                 <article
                   key={program.id}
                   id={program.id}
-                  className="scroll-mt-24 border border-graphite/15 bg-ivory-warm p-6 sm:p-10 lg:p-12"
+                  className="scroll-mt-24 border border-graphite/15 bg-ivory-muted p-6 sm:p-10 lg:p-12"
                 >
                   <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-graphite/15 pb-4">
                     <div className="flex items-center gap-3">
@@ -224,7 +216,7 @@ export function ProgramsExplorer() {
                         PROGRAM {program.index}
                       </span>
                       <span className="h-1 w-1 rounded-full bg-forest" />
-                      <span className="font-mono text-xs tracking-[0.14em] text-graphite-muted uppercase">
+                      <span className="font-mono text-xs tracking-[0.14em] text-graphite-soft uppercase">
                         {program.category}
                       </span>
                     </div>
@@ -241,7 +233,6 @@ export function ProgramsExplorer() {
                   </div>
 
                   <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start">
-                    {/* Image Column */}
                     <div className="lg:col-span-5">
                       <figure>
                         <div className="relative aspect-[4/3] w-full overflow-hidden border border-graphite/15 bg-graphite">
@@ -253,14 +244,13 @@ export function ProgramsExplorer() {
                             className="object-cover object-center"
                           />
                         </div>
-                        <figcaption className="mt-2.5 flex items-center justify-between font-mono text-[11px] tracking-[0.14em] text-graphite-muted uppercase">
+                        <figcaption className="mt-2.5 flex items-center justify-between font-mono text-[11px] tracking-[0.14em] text-graphite-soft uppercase">
                           <span>{program.image.caption}</span>
                           <span>{program.sampleDuration}</span>
                         </figcaption>
                       </figure>
                     </div>
 
-                    {/* Details Column */}
                     <div className="flex flex-col justify-between lg:col-span-7">
                       <div>
                         <h3 className="text-3xl font-semibold tracking-[-0.02em] text-graphite sm:text-4xl">
@@ -269,11 +259,10 @@ export function ProgramsExplorer() {
                         <p className="mt-2 font-serif text-xl text-forest italic">
                           {program.subtitle}
                         </p>
-                        <p className="mt-4 text-base leading-relaxed text-graphite-muted">
+                        <p className="mt-4 text-base leading-relaxed text-graphite-soft">
                           {program.description}
                         </p>
 
-                        {/* Benefits */}
                         <div className="mt-7 border-t border-graphite/15 pt-6">
                           <h4 className="font-mono text-[11px] font-semibold tracking-[0.18em] text-graphite uppercase">
                             KEY BENEFITS
@@ -294,10 +283,9 @@ export function ProgramsExplorer() {
                           </ul>
                         </div>
 
-                        {/* Metadata Specs */}
                         <dl className="mt-7 grid grid-cols-1 gap-4 border-t border-graphite/15 pt-6 sm:grid-cols-3">
                           <div>
-                            <dt className="font-mono text-[10px] font-semibold tracking-[0.16em] text-graphite-muted uppercase">
+                            <dt className="font-mono text-[10px] font-semibold tracking-[0.16em] text-graphite-soft uppercase">
                               EXPERIENCE LEVEL
                             </dt>
                             <dd className="mt-1 text-sm font-medium text-graphite">
@@ -305,7 +293,7 @@ export function ProgramsExplorer() {
                             </dd>
                           </div>
                           <div>
-                            <dt className="font-mono text-[10px] font-semibold tracking-[0.16em] text-graphite-muted uppercase">
+                            <dt className="font-mono text-[10px] font-semibold tracking-[0.16em] text-graphite-soft uppercase">
                               SAMPLE DURATION
                             </dt>
                             <dd className="mt-1 text-sm font-medium text-graphite">
@@ -313,7 +301,7 @@ export function ProgramsExplorer() {
                             </dd>
                           </div>
                           <div>
-                            <dt className="font-mono text-[10px] font-semibold tracking-[0.16em] text-graphite-muted uppercase">
+                            <dt className="font-mono text-[10px] font-semibold tracking-[0.16em] text-graphite-soft uppercase">
                               TRAINING FOCUS
                             </dt>
                             <dd className="mt-1 text-sm font-medium text-graphite">
@@ -324,7 +312,7 @@ export function ProgramsExplorer() {
                       </div>
 
                       <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-graphite/15 pt-6">
-                        <p className="text-xs text-graphite-muted">
+                        <p className="text-xs text-graphite-soft">
                           <span className="font-semibold text-graphite">
                             Setting:
                           </span>{" "}
@@ -332,7 +320,7 @@ export function ProgramsExplorer() {
                         </p>
                         <Link
                           href={`/contact?type=program&interest=${program.id}`}
-                          className="inline-flex min-h-[48px] items-center justify-center bg-forest px-6 text-xs font-semibold tracking-[0.16em] text-ivory uppercase transition-colors hover:bg-forest-light focus:outline-none focus:ring-2 focus:ring-forest"
+                          className="inline-flex min-h-[48px] items-center justify-center bg-forest px-6 text-xs font-semibold tracking-[0.16em] text-ivory uppercase transition-colors hover:bg-forest-deep focus:outline-none focus:ring-2 focus:ring-forest"
                         >
                           Inquire About {program.title}
                         </Link>
@@ -346,11 +334,10 @@ export function ProgramsExplorer() {
         </div>
       </section>
 
-      {/* Illustrative Weekly Schedule */}
       <section
         id="weekly-schedule"
         aria-labelledby="schedule-heading"
-        className="scroll-mt-20 border-b border-graphite/15 bg-ivory-warm py-20 sm:py-28"
+        className="scroll-mt-20 border-b border-graphite/15 bg-ivory-muted py-20 sm:py-28"
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
           <div className="mb-10 grid grid-cols-1 gap-8 border-b border-graphite/15 pb-8 lg:grid-cols-12 lg:items-end">
@@ -369,7 +356,7 @@ export function ProgramsExplorer() {
               </h2>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-sm leading-relaxed text-graphite-muted sm:text-base">
+              <p className="text-sm leading-relaxed text-graphite-soft sm:text-base">
                 This sample timetable demonstrates how Strength, Functional
                 Conditioning, Small-Group cohorts, and Mobility classes balance
                 across the week. Select any session to inquire about availability
@@ -378,7 +365,6 @@ export function ProgramsExplorer() {
             </div>
           </div>
 
-          {/* Day Filter Tabs */}
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
             <div
               role="group"
@@ -417,18 +403,17 @@ export function ProgramsExplorer() {
               })}
             </div>
 
-            <span className="font-mono text-[11px] tracking-[0.14em] text-graphite-muted uppercase">
+            <span className="font-mono text-[11px] tracking-[0.14em] text-graphite-soft uppercase">
               Sample Timetable · Concept Schedule
             </span>
           </div>
 
-          {/* Schedule Table (Desktop) / Cards (Mobile) */}
           <div className="border border-graphite/15 bg-ivory">
             <div className="hidden border-b border-graphite/15 bg-graphite px-6 py-3.5 font-mono text-[11px] font-semibold tracking-[0.16em] text-ivory uppercase md:grid md:grid-cols-12 md:gap-4">
-              <div className="col-span-2">Day & Time</div>
-              <div className="col-span-4">Session & Focus</div>
+              <div className="col-span-2">Day &amp; Time</div>
+              <div className="col-span-4">Session &amp; Focus</div>
               <div className="col-span-2">Discipline</div>
-              <div className="col-span-2">Coach & Level</div>
+              <div className="col-span-2">Coach &amp; Level</div>
               <div className="col-span-2 text-right">Session Inquiry</div>
             </div>
 
@@ -436,7 +421,7 @@ export function ProgramsExplorer() {
               {filteredSchedule.map((item) => (
                 <div
                   key={item.id}
-                  className="grid grid-cols-1 gap-4 p-5 transition-colors hover:bg-ivory-warm/60 md:grid-cols-12 md:items-center md:px-6 md:py-5"
+                  className="grid grid-cols-1 gap-4 p-5 transition-colors hover:bg-ivory-muted/60 md:grid-cols-12 md:items-center md:px-6 md:py-5"
                 >
                   <div className="md:col-span-2">
                     <span className="block font-mono text-xs font-semibold tracking-[0.14em] text-forest uppercase">
@@ -444,7 +429,7 @@ export function ProgramsExplorer() {
                     </span>
                     <span className="mt-0.5 block text-sm font-semibold text-graphite">
                       {item.time}{" "}
-                      <span className="font-normal text-graphite-muted">
+                      <span className="font-normal text-graphite-soft">
                         ({item.duration})
                       </span>
                     </span>
@@ -454,13 +439,13 @@ export function ProgramsExplorer() {
                     <h3 className="text-base font-semibold text-graphite">
                       {item.title}
                     </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-graphite-muted">
+                    <p className="mt-1 text-xs leading-relaxed text-graphite-soft">
                       {item.focus}
                     </p>
                   </div>
 
                   <div className="md:col-span-2">
-                    <span className="inline-block border border-graphite/20 bg-ivory-warm px-2.5 py-1 font-mono text-[10px] font-semibold tracking-[0.12em] text-graphite uppercase">
+                    <span className="inline-block border border-graphite/20 bg-ivory-muted px-2.5 py-1 font-mono text-[10px] font-semibold tracking-[0.12em] text-graphite uppercase">
                       {item.programTitle}
                     </span>
                   </div>
@@ -469,7 +454,7 @@ export function ProgramsExplorer() {
                     <span className="block text-sm font-medium text-graphite">
                       {item.coach}
                     </span>
-                    <span className="block font-mono text-[11px] text-graphite-muted">
+                    <span className="block font-mono text-[11px] text-graphite-soft">
                       {item.level}
                     </span>
                   </div>

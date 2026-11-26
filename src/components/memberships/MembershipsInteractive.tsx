@@ -6,24 +6,52 @@ import {
   ANNUAL_DISCOUNT_PERCENT,
   MEMBERSHIP_COMPARISON,
   MEMBERSHIP_TIERS,
+  calculateAnnualDiscount,
+  type MembershipComparisonRow,
 } from "@/data/siteContent";
 
 export type BillingCycle = "monthly" | "yearly";
+
+type ComparisonFieldKey = keyof Pick<
+  MembershipComparisonRow,
+  "foundation" | "allRound" | "performance"
+>;
+
+const TIER_COMPARISON_KEY: Record<string, ComparisonFieldKey> = {
+  foundation: "foundation",
+  "all-round": "allRound",
+  performance: "performance",
+};
 
 export function MembershipsInteractive() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
   const isYearly = billingCycle === "yearly";
 
+  const tierPricing = MEMBERSHIP_TIERS.map((tier) => {
+    const annual = calculateAnnualDiscount(
+      tier.monthlyPriceUsd,
+      tier.annualDiscountPercent
+    );
+    const displayedMonthlyRate = isYearly
+      ? annual.effectiveMonthlyRate
+      : tier.monthlyPriceUsd;
+
+    return {
+      tier,
+      annual,
+      displayedMonthlyRate,
+      comparisonKey: TIER_COMPARISON_KEY[tier.id] ?? "foundation",
+    };
+  });
+
   return (
     <div>
-      {/* Billing Toggle & Plan Cards */}
       <section
         aria-labelledby="plans-heading"
         className="border-b border-graphite/15 py-16 sm:py-24"
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-          {/* Billing Cycle Control Bar */}
-          <div className="mb-12 flex flex-col justify-between gap-6 border border-graphite/15 bg-ivory-warm p-6 sm:flex-row sm:items-center sm:p-8">
+          <div className="mb-12 flex flex-col justify-between gap-6 border border-graphite/15 bg-ivory-muted p-6 sm:flex-row sm:items-center sm:p-8">
             <div>
               <h2
                 id="plans-heading"
@@ -31,7 +59,7 @@ export function MembershipsInteractive() {
               >
                 Choose Your Billing Plan
               </h2>
-              <p className="mt-1 text-sm text-graphite-muted">
+              <p className="mt-1 text-sm text-graphite-soft">
                 Switch between month-to-month flexibility and annual billing
                 with a {ANNUAL_DISCOUNT_PERCENT}% savings across all three
                 tiers.
@@ -51,7 +79,7 @@ export function MembershipsInteractive() {
                   className={`h-11 flex-1 sm:flex-initial px-4 sm:px-6 text-xs font-semibold tracking-[0.16em] uppercase transition-colors ${
                     !isYearly
                       ? "bg-graphite text-ivory"
-                      : "text-graphite hover:bg-ivory-warm"
+                      : "text-graphite hover:bg-ivory-muted"
                   }`}
                 >
                   Monthly Billing
@@ -63,7 +91,7 @@ export function MembershipsInteractive() {
                   className={`inline-flex h-11 flex-1 sm:flex-initial items-center justify-center gap-2 px-4 sm:px-6 text-xs font-semibold tracking-[0.16em] uppercase transition-colors ${
                     isYearly
                       ? "bg-forest text-ivory"
-                      : "text-graphite hover:bg-ivory-warm"
+                      : "text-graphite hover:bg-ivory-muted"
                   }`}
                 >
                   <span>Yearly Billing</span>
@@ -80,22 +108,18 @@ export function MembershipsInteractive() {
               </div>
               <span
                 aria-live="polite"
-                className="font-mono text-[11px] tracking-[0.14em] text-graphite-muted uppercase"
+                className="font-mono text-[11px] tracking-[0.14em] text-graphite-soft uppercase"
               >
                 {isYearly
-                  ? "Showing effective monthly rate billed annually (20% discount applied)"
+                  ? `Showing effective monthly rate billed annually (${ANNUAL_DISCOUNT_PERCENT}% discount applied)`
                   : "Showing standard month-to-month USD rate"}
               </span>
             </div>
           </div>
 
-          {/* 3 Membership Cards */}
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-stretch">
-            {MEMBERSHIP_TIERS.map((tier) => {
+            {tierPricing.map(({ tier, annual, displayedMonthlyRate }) => {
               const isFeatured = Boolean(tier.featured);
-              const displayedMonthlyRate = isYearly
-                ? tier.effectiveAnnualMonthlyUsd
-                : tier.monthlyPriceUsd;
 
               return (
                 <article
@@ -104,7 +128,7 @@ export function MembershipsInteractive() {
                   className={`flex flex-col justify-between border p-7 sm:p-9 ${
                     isFeatured
                       ? "border-forest bg-graphite text-ivory shadow-xl"
-                      : "border-graphite/15 bg-ivory-warm text-graphite"
+                      : "border-graphite/15 bg-ivory-muted text-graphite"
                   }`}
                 >
                   <div>
@@ -121,7 +145,7 @@ export function MembershipsInteractive() {
                           {tier.badge}
                         </span>
                       ) : (
-                        <span className="font-mono text-[10px] tracking-[0.16em] text-graphite-muted uppercase">
+                        <span className="font-mono text-[10px] tracking-[0.16em] text-graphite-soft uppercase">
                           {isYearly ? "ANNUAL COMMITMENT" : "MONTH-TO-MONTH"}
                         </span>
                       )}
@@ -133,14 +157,13 @@ export function MembershipsInteractive() {
                       </h3>
                       <p
                         className={`mt-1.5 text-sm leading-relaxed ${
-                          isFeatured ? "text-stone" : "text-graphite-muted"
+                          isFeatured ? "text-stone" : "text-graphite-soft"
                         }`}
                       >
                         {tier.tagline}
                       </p>
                     </div>
 
-                    {/* Dynamic Price Block */}
                     <div className="mt-7 border-b border-current/15 pb-6">
                       <div className="flex items-baseline gap-2">
                         <span className="text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">
@@ -148,7 +171,7 @@ export function MembershipsInteractive() {
                         </span>
                         <span
                           className={`font-mono text-xs tracking-[0.14em] uppercase ${
-                            isFeatured ? "text-stone" : "text-graphite-muted"
+                            isFeatured ? "text-stone" : "text-graphite-soft"
                           }`}
                         >
                           USD / month
@@ -158,7 +181,7 @@ export function MembershipsInteractive() {
                             className={`ml-1 font-mono text-xs line-through ${
                               isFeatured
                                 ? "text-stone/60"
-                                : "text-graphite-muted"
+                                : "text-graphite-soft"
                             }`}
                           >
                             ${tier.monthlyPriceUsd}/mo
@@ -170,10 +193,10 @@ export function MembershipsInteractive() {
                         <div className="mt-2.5 flex flex-wrap items-center gap-2">
                           <span
                             className={`font-mono text-[11px] tracking-[0.12em] uppercase ${
-                              isFeatured ? "text-stone" : "text-graphite-muted"
+                              isFeatured ? "text-stone" : "text-graphite-soft"
                             }`}
                           >
-                            Billed ${tier.annualTotalUsd.toLocaleString()} USD /
+                            Billed ${annual.annualTotal.toLocaleString()} USD /
                             year
                           </span>
                           <span
@@ -183,7 +206,7 @@ export function MembershipsInteractive() {
                                 : "bg-forest/15 text-forest"
                             }`}
                           >
-                            Save ${tier.annualSavingsUsd}/yr
+                            Save ${annual.annualSavings}/yr
                           </span>
                         </div>
                       ) : (
@@ -191,11 +214,11 @@ export function MembershipsInteractive() {
                           className={`mt-2.5 font-mono text-[11px] tracking-[0.12em] uppercase ${
                             isFeatured
                               ? "text-stone/80"
-                              : "text-graphite-muted"
+                              : "text-graphite-soft"
                           }`}
                         >
-                          Or ${tier.effectiveAnnualMonthlyUsd}/mo billed
-                          annually (save ${tier.annualSavingsUsd}/yr)
+                          Or ${annual.effectiveMonthlyRate}/mo billed annually
+                          (save ${annual.annualSavings}/yr)
                         </p>
                       )}
                     </div>
@@ -211,7 +234,7 @@ export function MembershipsInteractive() {
                     <div className="mt-6">
                       <span
                         className={`font-mono text-[10px] font-semibold tracking-[0.18em] uppercase ${
-                          isFeatured ? "text-stone" : "text-graphite-muted"
+                          isFeatured ? "text-stone" : "text-graphite-soft"
                         }`}
                       >
                         INCLUDED IN {tier.name.toUpperCase()}
@@ -245,7 +268,7 @@ export function MembershipsInteractive() {
                     <div className="mb-5">
                       <span
                         className={`block font-mono text-[10px] tracking-[0.16em] uppercase ${
-                          isFeatured ? "text-stone/75" : "text-graphite-muted"
+                          isFeatured ? "text-stone/75" : "text-graphite-soft"
                         }`}
                       >
                         BEST FOR
@@ -259,12 +282,11 @@ export function MembershipsInteractive() {
                       href={`/contact?type=membership&interest=${tier.id}&billing=${billingCycle}`}
                       className={`inline-flex h-12 w-full items-center justify-center px-6 text-xs font-semibold tracking-[0.18em] uppercase transition-colors ${
                         isFeatured
-                          ? "bg-forest text-ivory hover:bg-forest-light"
+                          ? "bg-forest text-ivory hover:bg-forest-deep"
                           : "bg-graphite text-ivory hover:bg-forest"
                       }`}
                     >
-                      {tier.ctaLabel} (
-                      {isYearly ? "Yearly" : "Monthly"})
+                      {tier.ctaLabel} ({isYearly ? "Yearly" : "Monthly"})
                     </Link>
                   </div>
                 </article>
@@ -272,9 +294,8 @@ export function MembershipsInteractive() {
             })}
           </div>
 
-          {/* Illustrative Disclosure Note */}
-          <div className="mt-8 flex flex-col justify-between gap-3 border border-graphite/15 bg-ivory-warm px-5 py-4 sm:flex-row sm:items-center">
-            <p className="text-xs leading-relaxed text-graphite-muted">
+          <div className="mt-8 flex flex-col justify-between gap-3 border border-graphite/15 bg-ivory-muted px-5 py-4 sm:flex-row sm:items-center">
+            <p className="text-xs leading-relaxed text-graphite-soft">
               <strong className="font-semibold text-graphite">
                 Portfolio Demonstration Note:
               </strong>{" "}
@@ -289,11 +310,10 @@ export function MembershipsInteractive() {
         </div>
       </section>
 
-      {/* Feature Comparison Matrix */}
       <section
         id="comparison-table"
         aria-labelledby="comparison-heading"
-        className="border-b border-graphite/15 bg-ivory-warm py-20 sm:py-28"
+        className="border-b border-graphite/15 bg-ivory-muted py-20 sm:py-28"
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
           <div className="mb-12 flex flex-col justify-between gap-4 border-b border-graphite/15 pb-6 sm:flex-row sm:items-end">
@@ -308,15 +328,16 @@ export function MembershipsInteractive() {
                 Side-by-Side Feature Comparison
               </h2>
             </div>
-            <p className="font-mono text-xs tracking-[0.14em] text-graphite-muted uppercase">
+            <p className="font-mono text-xs tracking-[0.14em] text-graphite-soft uppercase">
               Currently viewing:{" "}
               <strong className="text-forest">
-                {isYearly ? "Yearly Billing (Save 20%)" : "Monthly Billing"}
+                {isYearly
+                  ? `Yearly Billing (Save ${ANNUAL_DISCOUNT_PERCENT}%)`
+                  : "Monthly Billing"}
               </strong>
             </p>
           </div>
 
-          {/* Desktop / Tablet Table (md and up) */}
           <div className="hidden overflow-hidden border border-graphite/15 bg-ivory md:block">
             <table className="w-full border-collapse text-left">
               <thead>
@@ -327,66 +348,67 @@ export function MembershipsInteractive() {
                   >
                     Feature / Access Area
                   </th>
-                  <th
-                    scope="col"
-                    className="px-4 py-5 font-mono text-xs font-semibold tracking-[0.16em] uppercase"
-                  >
-                    <div>Foundation</div>
-                    <div className="mt-1 text-stone">
-                      ${isYearly ? "156" : "195"}/mo
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="bg-forest px-4 py-5 font-mono text-xs font-semibold tracking-[0.16em] text-ivory uppercase"
-                  >
-                    <div>Club All-Round</div>
-                    <div className="mt-1 text-ivory/90">
-                      ${isYearly ? "212" : "265"}/mo
-                    </div>
-                  </th>
-                  <th
-                    scope="col"
-                    className="py-5 pr-6 pl-4 font-mono text-xs font-semibold tracking-[0.16em] uppercase"
-                  >
-                    <div>Performance</div>
-                    <div className="mt-1 text-stone">
-                      ${isYearly ? "308" : "385"}/mo
-                    </div>
-                  </th>
+                  {tierPricing.map(({ tier, displayedMonthlyRate }, idx) => {
+                    const isFeatured = Boolean(tier.featured);
+                    const isLast = idx === tierPricing.length - 1;
+                    return (
+                      <th
+                        key={tier.id}
+                        scope="col"
+                        className={`py-5 font-mono text-xs font-semibold tracking-[0.16em] uppercase ${
+                          isLast ? "pr-6 pl-4" : "px-4"
+                        } ${isFeatured ? "bg-forest text-ivory" : ""}`}
+                      >
+                        <div>{tier.name}</div>
+                        <div
+                          className={`mt-1 ${
+                            isFeatured ? "text-ivory/90" : "text-stone"
+                          }`}
+                        >
+                          ${displayedMonthlyRate}/mo
+                        </div>
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody className="divide-y divide-graphite/15 text-sm">
                 {MEMBERSHIP_COMPARISON.map((row) => (
                   <tr
                     key={row.feature}
-                    className="transition-colors hover:bg-ivory-warm/60"
+                    className="transition-colors hover:bg-ivory-muted/60"
                   >
                     <th
                       scope="row"
                       className="py-4 pr-4 pl-6 font-medium text-graphite"
                     >
                       <span className="block">{row.feature}</span>
-                      <span className="font-mono text-[10px] tracking-[0.14em] text-graphite-muted uppercase">
+                      <span className="font-mono text-[10px] tracking-[0.14em] text-graphite-soft uppercase">
                         {row.category}
                       </span>
                     </th>
-                    <td className="px-4 py-4 text-graphite-muted">
-                      {row.foundation}
-                    </td>
-                    <td className="bg-forest/5 px-4 py-4 font-medium text-graphite">
-                      {row.allRound}
-                    </td>
-                    <td className="py-4 pr-6 pl-4 text-graphite">
-                      {row.performance}
-                    </td>
+                    {tierPricing.map(({ tier, comparisonKey }, idx) => {
+                      const isFeatured = Boolean(tier.featured);
+                      const isLast = idx === tierPricing.length - 1;
+                      return (
+                        <td
+                          key={tier.id}
+                          className={`py-4 ${isLast ? "pr-6 pl-4" : "px-4"} ${
+                            isFeatured
+                              ? "bg-forest/5 font-medium text-graphite"
+                              : "text-graphite-soft"
+                          }`}
+                        >
+                          {row[comparisonKey]}
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          {/* Mobile Responsive Comparison Cards (below md) */}
           <div
             aria-label="Mobile membership feature comparison"
             className="space-y-4 md:hidden"
@@ -405,30 +427,36 @@ export function MembershipsInteractive() {
                   </h3>
                 </div>
                 <dl className="mt-3 space-y-2.5 text-xs">
-                  <div className="flex items-center justify-between gap-2">
-                    <dt className="font-mono tracking-[0.12em] text-graphite-muted uppercase">
-                      Foundation (${isYearly ? "156" : "195"}/mo)
-                    </dt>
-                    <dd className="text-right font-medium text-graphite">
-                      {row.foundation}
-                    </dd>
-                  </div>
-                  <div className="flex items-center justify-between gap-2 bg-forest/10 px-2.5 py-2">
-                    <dt className="font-mono font-semibold tracking-[0.12em] text-forest uppercase">
-                      Club All-Round (${isYearly ? "212" : "265"}/mo)
-                    </dt>
-                    <dd className="text-right font-semibold text-graphite">
-                      {row.allRound}
-                    </dd>
-                  </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <dt className="font-mono tracking-[0.12em] text-graphite-muted uppercase">
-                      Performance (${isYearly ? "308" : "385"}/mo)
-                    </dt>
-                    <dd className="text-right font-medium text-graphite">
-                      {row.performance}
-                    </dd>
-                  </div>
+                  {tierPricing.map(
+                    ({ tier, displayedMonthlyRate, comparisonKey }) => {
+                      const isFeatured = Boolean(tier.featured);
+                      return (
+                        <div
+                          key={tier.id}
+                          className={`flex items-center justify-between gap-2 ${
+                            isFeatured ? "bg-forest/10 px-2.5 py-2" : ""
+                          }`}
+                        >
+                          <dt
+                            className={`font-mono tracking-[0.12em] uppercase ${
+                              isFeatured
+                                ? "font-semibold text-forest"
+                                : "text-graphite-soft"
+                            }`}
+                          >
+                            {tier.name} (${displayedMonthlyRate}/mo)
+                          </dt>
+                          <dd
+                            className={`text-right text-graphite ${
+                              isFeatured ? "font-semibold" : "font-medium"
+                            }`}
+                          >
+                            {row[comparisonKey]}
+                          </dd>
+                        </div>
+                      );
+                    }
+                  )}
                 </dl>
               </div>
             ))}

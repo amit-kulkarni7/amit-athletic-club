@@ -21,7 +21,6 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="bg-ivory text-graphite">
-      {/* Page Header */}
       <section
         aria-labelledby="about-hero-heading"
         className="border-b border-graphite/15 pt-12 pb-16 sm:pt-16 sm:pb-24"
@@ -31,7 +30,7 @@ export default function AboutPage() {
             <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
               {ROUTE_EDITORIAL_MAP["/about"].eyebrow}
             </span>
-            <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-muted uppercase">
+            <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-soft uppercase">
               STRENGTH · MOVEMENT · INTENTION
             </span>
           </div>
@@ -50,7 +49,7 @@ export default function AboutPage() {
               </h1>
             </div>
             <div className="lg:col-span-4">
-              <p className="text-base leading-relaxed text-graphite-muted sm:text-lg">
+              <p className="text-base leading-relaxed text-graphite-soft sm:text-lg">
                 AMIT ATHLETIC CLUB was imagined around a simple idea: serious
                 strength training, athletic conditioning, and restorative
                 mobility belong under one roof—in a space that feels welcoming
@@ -80,7 +79,7 @@ export default function AboutPage() {
                   Built for both first-time lifters and experienced gym-goers.
                 </h2>
 
-                <div className="mt-6 space-y-5 text-base leading-relaxed text-graphite-muted">
+                <div className="mt-6 space-y-5 text-base leading-relaxed text-graphite-soft">
                   <p>
                     Most gyms ask you to choose between two extremes: crowded,
                     high-noise studios focused on daily exhaustion, or
@@ -104,7 +103,7 @@ export default function AboutPage() {
                     <span className="font-mono text-[11px] font-semibold tracking-[0.18em] text-forest uppercase">
                       FOR NEWCOMERS
                     </span>
-                    <p className="mt-2 text-sm leading-relaxed text-graphite-muted">
+                    <p className="mt-2 text-sm leading-relaxed text-graphite-soft">
                       Every membership begins with a complimentary 45-minute
                       welcome orientation so you feel comfortable with the
                       racks, weights, and class formats from your first visit.
@@ -114,7 +113,7 @@ export default function AboutPage() {
                     <span className="font-mono text-[11px] font-semibold tracking-[0.18em] text-forest uppercase">
                       FOR EXPERIENCED LIFTERS
                     </span>
-                    <p className="mt-2 text-sm leading-relaxed text-graphite-muted">
+                    <p className="mt-2 text-sm leading-relaxed text-graphite-soft">
                       Calibrated plates, dedicated lifting platforms, open turf
                       lanes, and coaches who understand structured progression
                       and recovery.
@@ -136,7 +135,7 @@ export default function AboutPage() {
                       className="object-cover object-center"
                     />
                   </div>
-                  <figcaption className="mt-2.5 flex items-center justify-between font-mono text-[11px] tracking-[0.14em] text-graphite-muted uppercase">
+                  <figcaption className="mt-2.5 flex items-center justify-between font-mono text-[11px] tracking-[0.14em] text-graphite-soft uppercase">
                     <span>Main Strength Floor</span>
                     <span>Natural Daylight & Open Walkways</span>
                   </figcaption>
@@ -153,12 +152,12 @@ export default function AboutPage() {
                         className="object-cover object-center"
                       />
                     </div>
-                    <figcaption className="mt-2.5 font-mono text-[11px] tracking-[0.14em] text-graphite-muted uppercase">
+                    <figcaption className="mt-2.5 font-mono text-[11px] tracking-[0.14em] text-graphite-soft uppercase">
                       Dedicated Power Racks & Platforms
                     </figcaption>
                   </figure>
 
-                  <div className="border border-graphite/15 bg-ivory-warm p-6">
+                  <div className="border border-graphite/15 bg-ivory-muted p-6">
                     <span className="font-mono text-[10px] font-semibold tracking-[0.18em] text-forest uppercase">
                       CONCEPT NOTE
                     </span>
@@ -167,7 +166,7 @@ export default function AboutPage() {
                       It is a practice that supports the rest of your
                       life.&rdquo;
                     </p>
-                    <p className="mt-3 font-mono text-[11px] tracking-[0.14em] text-graphite-muted uppercase">
+                    <p className="mt-3 font-mono text-[11px] tracking-[0.14em] text-graphite-soft uppercase">
                       — AAC Founding Principle
                     </p>
                   </div>
@@ -181,7 +180,7 @@ export default function AboutPage() {
       {/* Facility Spaces */}
       <section
         aria-labelledby="about-facilities-heading"
-        className="border-b border-graphite/15 bg-ivory-warm py-20 sm:py-28"
+        className="border-b border-graphite/15 bg-ivory-muted py-20 sm:py-28"
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
           <div className="mb-14 grid grid-cols-1 gap-8 border-b border-graphite/15 pb-10 lg:grid-cols-12 lg:items-end">
@@ -200,7 +199,7 @@ export default function AboutPage() {
               </h2>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-base leading-relaxed text-graphite-muted">
+              <p className="text-base leading-relaxed text-graphite-soft">
                 Every zone of the club is arranged so heavy lifting, dynamic
                 conditioning, coached small groups, and quiet stretching each
                 have their own dedicated floor space.
@@ -219,7 +218,7 @@ export default function AboutPage() {
                     <span className="font-mono text-xs font-semibold tracking-[0.18em] text-forest uppercase">
                       {area.index}
                     </span>
-                    <span className="font-mono text-[11px] tracking-[0.14em] text-graphite-muted uppercase">
+                    <span className="font-mono text-[11px] tracking-[0.14em] text-graphite-soft uppercase">
                       DEDICATED ZONE
                     </span>
                   </div>
@@ -230,13 +229,13 @@ export default function AboutPage() {
                   <p className="mt-2 font-serif text-lg text-forest italic">
                     {area.summary}
                   </p>
-                  <p className="mt-4 text-sm leading-relaxed text-graphite-muted sm:text-base">
+                  <p className="mt-4 text-sm leading-relaxed text-graphite-soft sm:text-base">
                     {area.description}
                   </p>
                 </div>
 
                 <div className="mt-8 border-t border-graphite/10 pt-5">
-                  <span className="font-mono text-[10px] font-semibold tracking-[0.18em] text-graphite-muted uppercase">
+                  <span className="font-mono text-[10px] font-semibold tracking-[0.18em] text-graphite-soft uppercase">
                     SPACE HIGHLIGHTS
                   </span>
                   <ul className="mt-3 space-y-2">
@@ -318,13 +317,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Bottom CTA */}
       <section
         aria-labelledby="about-cta-heading"
         className="py-20 sm:py-24"
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 gap-10 border border-graphite/15 bg-ivory-warm p-8 sm:p-12 lg:grid-cols-12 lg:items-center">
+          <div className="grid grid-cols-1 gap-10 border border-graphite/15 bg-ivory-muted p-8 sm:p-12 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-7">
               <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
                 NEXT STEP
@@ -335,7 +333,7 @@ export default function AboutPage() {
               >
                 Explore our training programs or compare membership plans.
               </h2>
-              <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-muted">
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-soft">
                 See how our four core disciplines fit together across the week,
                 or review our illustrative monthly and annual membership tiers.
               </p>
@@ -343,7 +341,7 @@ export default function AboutPage() {
             <div className="flex flex-col gap-3.5 sm:flex-row lg:col-span-5 lg:justify-end">
               <Link
                 href="/programs"
-                className="inline-flex h-12 items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-light"
+                className="inline-flex h-12 items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-deep"
               >
                 Explore Programs
               </Link>

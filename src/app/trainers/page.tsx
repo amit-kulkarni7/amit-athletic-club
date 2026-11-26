@@ -21,7 +21,6 @@ export const metadata: Metadata = {
 export default function TrainersPage() {
   return (
     <div className="bg-ivory text-graphite">
-      {/* Page Header */}
       <section
         aria-labelledby="trainers-hero-heading"
         className="border-b border-graphite/15 pt-12 pb-16 sm:pt-16 sm:pb-20"
@@ -31,7 +30,7 @@ export default function TrainersPage() {
             <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
               {ROUTE_EDITORIAL_MAP["/trainers"].eyebrow}
             </span>
-            <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-muted uppercase">
+            <span className="font-mono text-[11px] tracking-[0.16em] text-graphite-soft uppercase">
               Meet the Coaching Team
             </span>
           </div>
@@ -49,7 +48,7 @@ export default function TrainersPage() {
               </h1>
             </div>
             <div className="lg:col-span-4">
-              <p className="text-base leading-relaxed text-graphite-muted sm:text-lg">
+              <p className="text-base leading-relaxed text-graphite-soft sm:text-lg">
                 Our coaching model brings together four specialists—covering
                 barbell strength, turf conditioning, restorative mobility, and
                 small-group cohorts—so every member has clear, supportive
@@ -58,9 +57,8 @@ export default function TrainersPage() {
             </div>
           </div>
 
-          {/* Concept Coaching Notice */}
-          <div className="mt-10 border border-graphite/15 bg-ivory-warm px-6 py-4">
-            <p className="text-xs leading-relaxed text-graphite-muted sm:text-sm">
+          <div className="mt-10 border border-graphite/15 bg-ivory-muted px-6 py-4">
+            <p className="text-xs leading-relaxed text-graphite-soft sm:text-sm">
               <strong className="font-semibold text-graphite">
                 Concept Coaching Roster:
               </strong>{" "}
@@ -91,7 +89,7 @@ export default function TrainersPage() {
                 Meet the Coaching Team
               </h2>
             </div>
-            <span className="font-mono text-xs tracking-[0.14em] text-graphite-muted uppercase">
+            <span className="font-mono text-xs tracking-[0.14em] text-graphite-soft uppercase">
               4 Core Disciplines · Coordinated Curriculum
             </span>
           </div>
@@ -101,20 +99,18 @@ export default function TrainersPage() {
               <article
                 key={trainer.id}
                 id={trainer.id}
-                className="flex flex-col justify-between border border-graphite/15 bg-ivory-warm p-6 sm:p-9"
+                className="flex flex-col justify-between border border-graphite/15 bg-ivory-muted p-6 sm:p-9"
               >
                 <div>
-                  {/* Profile Header */}
                   <div className="flex flex-wrap items-center justify-between gap-2 border-b border-graphite/15 pb-4">
                     <span className="font-mono text-xs font-semibold tracking-[0.18em] text-forest uppercase">
                       {trainer.index} · {trainer.specialty}
                     </span>
-                    <span className="font-mono text-xs tracking-[0.14em] text-graphite-muted uppercase">
+                    <span className="font-mono text-xs tracking-[0.14em] text-graphite-soft uppercase">
                       {trainer.role}
                     </span>
                   </div>
 
-                  {/* Discipline Movement Image */}
                   <figure className="mt-6">
                     <div className="relative aspect-[16/10] w-full overflow-hidden border border-graphite/15 bg-graphite">
                       <Image
@@ -125,13 +121,12 @@ export default function TrainersPage() {
                         className="object-cover object-center"
                       />
                     </div>
-                    <figcaption className="mt-2 flex items-center justify-between font-mono text-[10px] tracking-[0.14em] text-graphite-muted uppercase">
+                    <figcaption className="mt-2 flex items-center justify-between font-mono text-[10px] tracking-[0.14em] text-graphite-soft uppercase">
                       <span>{trainer.image.caption}</span>
                       <span>AAC Curriculum</span>
                     </figcaption>
                   </figure>
 
-                  {/* Name, Role & Philosophy */}
                   <div className="mt-6">
                     <h3 className="text-2xl font-semibold tracking-tight text-graphite sm:text-3xl">
                       {trainer.name}
@@ -144,12 +139,11 @@ export default function TrainersPage() {
                       &ldquo;{trainer.philosophyQuote}&rdquo;
                     </blockquote>
 
-                    <p className="mt-5 text-sm leading-relaxed text-graphite-muted sm:text-base">
+                    <p className="mt-5 text-sm leading-relaxed text-graphite-soft sm:text-base">
                       {trainer.bio}
                     </p>
                   </div>
 
-                  {/* Training Focus & Who They Coach */}
                   <div className="mt-6 grid grid-cols-1 gap-6 border-t border-graphite/15 pt-6 sm:grid-cols-2">
                     <div>
                       <h4 className="font-mono text-[10px] font-semibold tracking-[0.18em] text-graphite uppercase">
@@ -175,14 +169,13 @@ export default function TrainersPage() {
                       <h4 className="font-mono text-[10px] font-semibold tracking-[0.18em] text-graphite uppercase">
                         WHO THEY COACH BEST
                       </h4>
-                      <p className="mt-2.5 text-xs leading-relaxed text-graphite-muted sm:text-sm">
+                      <p className="mt-2.5 text-xs leading-relaxed text-graphite-soft sm:text-sm">
                         {trainer.whoTheyCoach}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Action Footer */}
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-graphite/15 pt-6">
                   <Link
                     href={`/programs#${trainer.programId}`}
@@ -192,7 +185,7 @@ export default function TrainersPage() {
                   </Link>
                   <Link
                     href={`/contact?type=program&interest=${trainer.programId}`}
-                    className="inline-flex min-h-[44px] items-center justify-center bg-forest px-6 text-xs font-semibold tracking-[0.16em] text-ivory uppercase transition-colors hover:bg-forest-light focus:outline-none focus:ring-2 focus:ring-forest"
+                    className="inline-flex min-h-[44px] items-center justify-center bg-forest px-6 text-xs font-semibold tracking-[0.16em] text-ivory uppercase transition-colors hover:bg-forest-deep focus:outline-none focus:ring-2 focus:ring-forest"
                   >
                     Inquire About Coaching
                   </Link>
@@ -259,13 +252,12 @@ export default function TrainersPage() {
         </div>
       </section>
 
-      {/* Bottom CTA */}
       <section
         aria-labelledby="trainers-cta-heading"
         className="py-20 sm:py-24"
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 gap-10 border border-graphite/15 bg-ivory-warm p-8 sm:p-12 lg:grid-cols-12 lg:items-center">
+          <div className="grid grid-cols-1 gap-10 border border-graphite/15 bg-ivory-muted p-8 sm:p-12 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-7">
               <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
                 START WITH AN ORIENTATION
@@ -276,7 +268,7 @@ export default function TrainersPage() {
               >
                 Experience our coaching approach firsthand.
               </h2>
-              <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-muted">
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-soft">
                 Inquire about a complimentary welcome orientation on our Contact
                 page or explore how coaching sessions are integrated into our
                 membership plans.
@@ -285,7 +277,7 @@ export default function TrainersPage() {
             <div className="flex flex-col gap-3.5 sm:flex-row lg:col-span-5 lg:justify-end">
               <Link
                 href="/contact?type=trial"
-                className="inline-flex h-12 items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-light"
+                className="inline-flex h-12 items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-deep"
               >
                 Orientation Inquiry
               </Link>

@@ -1,168 +1,31 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CountryCode } from "libphonenumber-js/max";
-import { MEMBERSHIP_TIERS, PROGRAMS } from "@/data/siteContent";
 import {
   ALL_COUNTRIES,
   POPULAR_COUNTRIES,
   getSamplePlaceholder,
 } from "@/components/contact/countries";
-import { validateInternationalPhoneNumber } from "@/components/contact/phoneValidation";
+import {
+  type BillingPreference,
+  type FormErrors,
+  type InquiryType,
+  getInterestOptions,
+  resolveInitialBilling,
+  resolveInitialInterest,
+  resolveInitialType,
+  validateInquiryField,
+  validateInquiryForm,
+} from "@/components/contact/contactValidation";
 
-export type InquiryType = "membership" | "trial" | "program" | "general";
-export type BillingPreference = "monthly" | "yearly";
-
-export interface FormErrors {
-  fullName?: string;
-  email?: string;
-  phone?: string;
-  selectedInterest?: string;
-  message?: string;
-}
-
-interface InterestOption {
-  id: string;
-  label: string;
-}
-
-const MEMBERSHIP_OPTIONS: InterestOption[] = MEMBERSHIP_TIERS.map((tier) => ({
-  id: tier.id,
-  label: `${tier.name} ($${tier.monthlyPriceUsd}/mo standard · $${tier.effectiveAnnualMonthlyUsd}/mo yearly)`,
-}));
-
-const PROGRAM_OPTIONS: InterestOption[] = PROGRAMS.map((prog) => ({
-  id: prog.id,
-  label: `${prog.title} (${prog.sampleDuration})`,
-}));
-
-const TRIAL_OPTIONS: InterestOption[] = [
-  {
-    id: "welcome-orientation",
-    label: "45-Minute Welcome Orientation & Club Tour",
-  },
-  {
-    id: "small-group-trial",
-    label: "Small-Group Training Trial Cohort (Max 8)",
-  },
-  {
-    id: "mobility-trial",
-    label: "Mobility & Recovery Studio Trial Session",
-  },
-];
-
-const GENERAL_OPTIONS: InterestOption[] = [
-  {
-    id: "general-club",
-    label: "General Club Amenities & Concept Question",
-  },
-  {
-    id: "operating-hours",
-    label: "Sample Schedule & Access Hours",
-  },
-  {
-    id: "concept-inquiry",
-    label: "Portfolio Design & Architecture Inquiries",
-  },
-];
-
-/**
- * Validates full name:
- * - Trimmed, non-empty, min 2 chars, max 100 chars
- * - Supports letters (including unicode letters/accents), spaces, hyphens, and apostrophes
- */
-export function validateFullName(value: string): string | undefined {
-  const trimmed = value.trim();
-  if (!trimmed) {
-    return "Please enter your full name.";
-  }
-  if (trimmed.length < 2) {
-    return "Name must be at least 2 characters.";
-  }
-  if (trimmed.length > 100) {
-    return "Name must be 100 characters or fewer.";
-  }
-  const namePattern = /^[\p{L}\p{M}'’\-\s]{2,100}$/u;
-  if (!namePattern.test(trimmed)) {
-    return "Please enter a valid name containing only letters, spaces, hyphens, or apostrophes.";
-  }
-  return undefined;
-}
-
-/**
- * Validates email address with standard RFC pattern
- */
-export function validateEmail(value: string): string | undefined {
-  const trimmed = value.trim();
-  if (!trimmed) {
-    return "Please enter your email address.";
-  }
-  const emailPattern =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-  if (!emailPattern.test(trimmed)) {
-    return "Please enter a valid email address (e.g., alex@example.com).";
-  }
-  return undefined;
-}
-
-export { validateInternationalPhoneNumber };
-
-/**
- * Validates phone numbers with US as default region, supporting international numbers as well.
- */
-export function validateUsPhoneNumber(value: string): {
-  error?: string;
-  formatted?: string;
-  e164?: string;
-} {
-  const res = validateInternationalPhoneNumber(value, "US");
-  return {
-    error: res.error,
-    formatted: res.formatted || res.national,
-    e164: res.e164,
-  };
-}
-
-export function validateMessage(value: string): string | undefined {
-  if (value.length > 1000) {
-    return "Message must be 1,000 characters or fewer.";
-  }
-  return undefined;
-}
-
-export function resolveInitialType(param: string | null): InquiryType {
-  if (
-    param === "membership" ||
-    param === "trial" ||
-    param === "program" ||
-    param === "general"
-  ) {
-    return param;
-  }
-  return "membership";
-}
-
-export function resolveInitialInterest(
-  type: InquiryType,
-  interestParam: string | null
-): string {
-  if (interestParam) {
-    const validTier = MEMBERSHIP_TIERS.some((t) => t.id === interestParam);
-    const validProgram = PROGRAMS.some((p) => p.id === interestParam);
-    if (validTier || validProgram) {
-      return interestParam;
-    }
-  }
-  if (type === "membership") return "all-round";
-  if (type === "program") return "strength-conditioning";
-  if (type === "trial") return "welcome-orientation";
-  return "general-club";
-}
-
-export function resolveInitialBilling(param: string | null): BillingPreference {
-  return param === "yearly" ? "yearly" : "monthly";
-}
+const INTEREST_LABELS: Record<InquiryType, string> = {
+  membership: "Selected Membership Plan",
+  program: "Selected Training Program",
+  trial: "Trial Session Preference",
+  general: "Topic of Interest",
+};
 
 export function ContactForm() {
   const searchParams = useSearchParams();
@@ -219,88 +82,47 @@ function ContactFormInner({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Field refs for auto-focusing first invalid field
   const fullNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
   const interestRef = useRef<HTMLSelectElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
-  const getOptionsForType = (type: InquiryType): InterestOption[] => {
-    switch (type) {
-      case "membership":
-        return MEMBERSHIP_OPTIONS;
-      case "program":
-        return PROGRAM_OPTIONS;
-      case "trial":
-        return TRIAL_OPTIONS;
-      case "general":
-        return GENERAL_OPTIONS;
-    }
+  const updateFieldError = (
+    field: keyof FormErrors,
+    value: string,
+    country: CountryCode = selectedCountry
+  ) => {
+    const err = validateInquiryField(field, value, country);
+    setErrors((prev) => ({ ...prev, [field]: err }));
   };
 
   const handleInquiryTypeChange = (newType: InquiryType) => {
     setInquiryType(newType);
-    const options = getOptionsForType(newType);
+    const options = getInterestOptions(newType);
     const currentIsValid = options.some((opt) => opt.id === selectedInterest);
     if (!currentIsValid) {
       setSelectedInterest(options[0]?.id || "");
     }
   };
 
+  // Preserve typed phone text when changing country so users do not lose partial input
   const handleCountryChange = (newCountry: CountryCode) => {
     setSelectedCountry(newCountry);
     if (touched.phone && phone.trim()) {
-      const res = validateInternationalPhoneNumber(phone, newCountry);
-      setErrors((prev) => ({ ...prev, phone: res.error }));
+      updateFieldError("phone", phone, newCountry);
     }
   };
 
-  const validateAll = (): FormErrors => {
-    const nextErrors: FormErrors = {};
-
-    const nameErr = validateFullName(fullName);
-    if (nameErr) nextErrors.fullName = nameErr;
-
-    const emailErr = validateEmail(email);
-    if (emailErr) nextErrors.email = emailErr;
-
-    const phoneRes = validateInternationalPhoneNumber(phone, selectedCountry);
-    if (phoneRes.error) nextErrors.phone = phoneRes.error;
-
-    if (!selectedInterest) {
-      nextErrors.selectedInterest = "Please select a topic or program.";
-    }
-
-    const msgErr = validateMessage(message);
-    if (msgErr) nextErrors.message = msgErr;
-
-    return nextErrors;
-  };
-
-  const handleBlur = (field: string) => {
+  const handleBlur = (field: keyof FormErrors, value: string) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
-
-    if (field === "fullName") {
-      const err = validateFullName(fullName);
-      setErrors((prev) => ({ ...prev, fullName: err }));
-    } else if (field === "email") {
-      const err = validateEmail(email);
-      setErrors((prev) => ({ ...prev, email: err }));
-    } else if (field === "phone") {
-      const res = validateInternationalPhoneNumber(phone, selectedCountry);
-      setErrors((prev) => ({ ...prev, phone: res.error }));
-    } else if (field === "message") {
-      const err = validateMessage(message);
-      setErrors((prev) => ({ ...prev, message: err }));
-    }
+    updateFieldError(field, value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting) return;
 
-    // Mark all fields touched
     setTouched({
       fullName: true,
       email: true,
@@ -309,22 +131,30 @@ function ContactFormInner({
       message: true,
     });
 
-    const validationErrors = validateAll();
+    const validationErrors = validateInquiryForm(
+      { fullName, email, phone, selectedInterest, message },
+      selectedCountry
+    );
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setIsSubmitted(false);
 
-      // Auto-focus first invalid field in DOM order
-      if (validationErrors.fullName) {
-        fullNameRef.current?.focus();
-      } else if (validationErrors.email) {
-        emailRef.current?.focus();
-      } else if (validationErrors.phone) {
-        phoneRef.current?.focus();
-      } else if (validationErrors.selectedInterest) {
-        interestRef.current?.focus();
-      } else if (validationErrors.message) {
-        messageRef.current?.focus();
+      const orderedRefs: Array<
+        [keyof FormErrors, React.RefObject<HTMLElement | null>]
+      > = [
+        ["fullName", fullNameRef],
+        ["email", emailRef],
+        ["phone", phoneRef],
+        ["selectedInterest", interestRef],
+        ["message", messageRef],
+      ];
+
+      for (const [field, ref] of orderedRefs) {
+        if (validationErrors[field]) {
+          ref.current?.focus();
+          break;
+        }
       }
       return;
     }
@@ -332,7 +162,7 @@ function ContactFormInner({
     setIsSubmitting(true);
     setErrors({});
 
-    // Client-side simulation submission (no network calls, no storage)
+    // Client-side simulation only (no network requests or storage)
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -354,12 +184,11 @@ function ContactFormInner({
     setIsSubmitting(false);
   };
 
-  const currentOptions = getOptionsForType(inquiryType);
-  const hasErrors = Object.keys(errors).some((key) => Boolean(errors[key as keyof FormErrors]));
+  const currentOptions = getInterestOptions(inquiryType);
+  const hasErrors = Object.values(errors).some(Boolean);
 
   return (
-    <div className="border border-graphite/15 bg-ivory-warm p-6 sm:p-10">
-      {/* Discreet Portfolio Demo Notice */}
+    <div className="border border-graphite/15 bg-ivory-muted p-6 sm:p-10">
       <div className="mb-8 border border-forest/20 bg-forest/5 p-4 sm:p-5">
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-forest" />
@@ -367,13 +196,13 @@ function ContactFormInner({
             Portfolio Demonstration
           </span>
         </div>
-        <p className="mt-2 text-xs leading-relaxed text-graphite-muted sm:text-sm">
-          This is a demonstration inquiry form. Please use sample details. Your entries are validated in your browser and are not sent or saved.
+        <p className="mt-2 text-xs leading-relaxed text-graphite-soft sm:text-sm">
+          This is a demonstration inquiry form. Please use sample details. Your
+          entries are validated in your browser and are not sent or saved.
         </p>
       </div>
 
       {isSubmitted ? (
-        /* Truthful Success State — Privacy Preserved */
         <div
           role="status"
           aria-live="polite"
@@ -389,7 +218,11 @@ function ContactFormInner({
                 stroke="currentColor"
                 strokeWidth={2.5}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </span>
             <span className="font-mono text-xs font-semibold tracking-[0.18em] text-forest uppercase">
@@ -402,10 +235,11 @@ function ContactFormInner({
           </h3>
 
           <p className="mt-3 text-sm font-medium text-graphite sm:text-base">
-            Demo submission only — your information was validated in your browser and was not sent or saved.
+            Demo submission only — your information was validated in your
+            browser and was not sent or saved.
           </p>
 
-          <p className="mt-3 text-xs leading-relaxed text-graphite-muted sm:text-sm">
+          <p className="mt-3 text-xs leading-relaxed text-graphite-soft sm:text-sm">
             Thank you for exploring the AMIT ATHLETIC CLUB digital experience.
           </p>
 
@@ -413,7 +247,7 @@ function ContactFormInner({
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex min-h-[48px] items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-light focus:outline-none focus:ring-2 focus:ring-forest focus:ring-offset-2"
+              className="inline-flex min-h-[48px] items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-deep focus:outline-none focus:ring-2 focus:ring-forest focus:ring-offset-2"
             >
               Submit Another Inquiry
             </button>
@@ -439,7 +273,6 @@ function ContactFormInner({
             </div>
           )}
 
-          {/* 1. Full Name */}
           <div>
             <label
               htmlFor="contact-full-name"
@@ -458,17 +291,16 @@ function ContactFormInner({
               onChange={(e) => {
                 setFullName(e.target.value);
                 if (touched.fullName) {
-                  const err = validateFullName(e.target.value);
-                  setErrors((prev) => ({ ...prev, fullName: err }));
+                  updateFieldError("fullName", e.target.value);
                 }
               }}
-              onBlur={() => handleBlur("fullName")}
+              onBlur={() => handleBlur("fullName", fullName)}
               placeholder="Alex Morgan"
               aria-invalid={Boolean(errors.fullName)}
               aria-describedby={
                 errors.fullName ? "contact-full-name-error" : undefined
               }
-              className={`mt-2 h-12 w-full border bg-ivory px-4 text-sm text-graphite placeholder:text-graphite-muted/50 focus:outline-none ${
+              className={`mt-2 h-12 w-full border bg-ivory px-4 text-sm text-graphite placeholder:text-graphite-soft/60 focus:outline-none ${
                 errors.fullName
                   ? "border-red-700 focus:border-red-800"
                   : "border-graphite/25 focus:border-forest"
@@ -485,7 +317,6 @@ function ContactFormInner({
             )}
           </div>
 
-          {/* 2 & 3. Email Address & Phone Number */}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
               <label
@@ -505,17 +336,16 @@ function ContactFormInner({
                 onChange={(e) => {
                   setEmail(e.target.value);
                   if (touched.email) {
-                    const err = validateEmail(e.target.value);
-                    setErrors((prev) => ({ ...prev, email: err }));
+                    updateFieldError("email", e.target.value);
                   }
                 }}
-                onBlur={() => handleBlur("email")}
+                onBlur={() => handleBlur("email", email)}
                 placeholder="alex@example.com"
                 aria-invalid={Boolean(errors.email)}
                 aria-describedby={
                   errors.email ? "contact-email-error" : undefined
                 }
-                className={`mt-2 h-12 w-full border bg-ivory px-4 text-sm text-graphite placeholder:text-graphite-muted/50 focus:outline-none ${
+                className={`mt-2 h-12 w-full border bg-ivory px-4 text-sm text-graphite placeholder:text-graphite-soft/60 focus:outline-none ${
                   errors.email
                     ? "border-red-700 focus:border-red-800"
                     : "border-graphite/25 focus:border-forest"
@@ -540,13 +370,12 @@ function ContactFormInner({
                 >
                   Phone Number <span className="text-forest">*</span>
                 </label>
-                <span className="font-mono text-[10px] tracking-[0.14em] text-graphite-muted uppercase">
+                <span className="font-mono text-[10px] tracking-[0.14em] text-graphite-soft uppercase">
                   International Support
                 </span>
               </div>
 
               <div className="mt-2 grid grid-cols-1 sm:grid-cols-12 gap-2">
-                {/* Accessible Country/Region Selector */}
                 <div className="sm:col-span-5">
                   <label htmlFor="contact-country" className="sr-only">
                     Select Country or Region Code
@@ -578,7 +407,6 @@ function ContactFormInner({
                   </select>
                 </div>
 
-                {/* Phone Number Input */}
                 <div className="sm:col-span-7">
                   <input
                     ref={phoneRef}
@@ -591,20 +419,16 @@ function ContactFormInner({
                     onChange={(e) => {
                       setPhone(e.target.value);
                       if (touched.phone) {
-                        const res = validateInternationalPhoneNumber(
-                          e.target.value,
-                          selectedCountry
-                        );
-                        setErrors((prev) => ({ ...prev, phone: res.error }));
+                        updateFieldError("phone", e.target.value);
                       }
                     }}
-                    onBlur={() => handleBlur("phone")}
+                    onBlur={() => handleBlur("phone", phone)}
                     placeholder={getSamplePlaceholder(selectedCountry)}
                     aria-invalid={Boolean(errors.phone)}
                     aria-describedby={
                       errors.phone ? "contact-phone-error" : undefined
                     }
-                    className={`h-12 w-full border bg-ivory px-4 text-sm text-graphite placeholder:text-graphite-muted/50 focus:outline-none ${
+                    className={`h-12 w-full border bg-ivory px-4 text-sm text-graphite placeholder:text-graphite-soft/60 focus:outline-none ${
                       errors.phone
                         ? "border-red-700 focus:border-red-800"
                         : "border-graphite/25 focus:border-forest"
@@ -625,7 +449,6 @@ function ContactFormInner({
             </div>
           </div>
 
-          {/* 4. Inquiry Type */}
           <div>
             <label
               htmlFor="contact-inquiry-type"
@@ -643,13 +466,12 @@ function ContactFormInner({
               className="mt-2 h-12 w-full border border-graphite/25 bg-ivory px-4 text-sm text-graphite focus:border-forest focus:outline-none"
             >
               <option value="membership">Membership Inquiries</option>
-              <option value="trial">Free Trial & Orientation</option>
+              <option value="trial">Free Trial &amp; Orientation</option>
               <option value="program">Training Program Details</option>
               <option value="general">General Inquiries</option>
             </select>
           </div>
 
-          {/* 5. Relevant Membership or Program Interest (and Dynamic Billing Preference) */}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div
               className={
@@ -660,13 +482,7 @@ function ContactFormInner({
                 htmlFor="contact-interest"
                 className="block font-mono text-[11px] font-semibold tracking-[0.16em] text-graphite uppercase"
               >
-                {inquiryType === "membership"
-                  ? "Selected Membership Plan"
-                  : inquiryType === "program"
-                    ? "Selected Training Program"
-                    : inquiryType === "trial"
-                      ? "Trial Session Preference"
-                      : "Topic of Interest"}{" "}
+                {INTEREST_LABELS[inquiryType]}{" "}
                 <span className="text-forest">*</span>
               </label>
               <select
@@ -677,7 +493,10 @@ function ContactFormInner({
                 onChange={(e) => {
                   setSelectedInterest(e.target.value);
                   if (errors.selectedInterest) {
-                    setErrors((prev) => ({ ...prev, selectedInterest: undefined }));
+                    setErrors((prev) => ({
+                      ...prev,
+                      selectedInterest: undefined,
+                    }));
                   }
                 }}
                 className="mt-2 h-12 w-full border border-graphite/25 bg-ivory px-4 text-sm text-graphite focus:border-forest focus:outline-none"
@@ -690,7 +509,6 @@ function ContactFormInner({
               </select>
             </div>
 
-            {/* Billing Preference — only shown for Membership inquiries */}
             {inquiryType === "membership" && (
               <div>
                 <span className="block font-mono text-[11px] font-semibold tracking-[0.16em] text-graphite uppercase">
@@ -730,7 +548,6 @@ function ContactFormInner({
             )}
           </div>
 
-          {/* 6. Optional Message or Training Goals */}
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -739,7 +556,7 @@ function ContactFormInner({
               >
                 Optional Message or Training Goals
               </label>
-              <span className="font-mono text-[10px] text-graphite-muted">
+              <span className="font-mono text-[10px] text-graphite-soft">
                 {message.length} / 1,000
               </span>
             </div>
@@ -753,17 +570,16 @@ function ContactFormInner({
               onChange={(e) => {
                 setMessage(e.target.value);
                 if (touched.message) {
-                  const err = validateMessage(e.target.value);
-                  setErrors((prev) => ({ ...prev, message: err }));
+                  updateFieldError("message", e.target.value);
                 }
               }}
-              onBlur={() => handleBlur("message")}
+              onBlur={() => handleBlur("message", message)}
               placeholder="Tell us about your fitness background, preferred schedule, or any specific questions..."
               aria-invalid={Boolean(errors.message)}
               aria-describedby={
                 errors.message ? "contact-message-error" : undefined
               }
-              className={`mt-2 w-full border bg-ivory p-4 text-sm text-graphite placeholder:text-graphite-muted/50 focus:outline-none ${
+              className={`mt-2 w-full border bg-ivory p-4 text-sm text-graphite placeholder:text-graphite-soft/60 focus:outline-none ${
                 errors.message
                   ? "border-red-700 focus:border-red-800"
                   : "border-graphite/25 focus:border-forest"
@@ -780,15 +596,14 @@ function ContactFormInner({
             )}
           </div>
 
-          {/* 7. Submit Button */}
           <div className="flex flex-col justify-between gap-4 border-t border-graphite/15 pt-6 sm:flex-row sm:items-center">
-            <p className="font-mono text-[11px] tracking-[0.12em] text-graphite-muted uppercase">
+            <p className="font-mono text-[11px] tracking-[0.12em] text-graphite-soft uppercase">
               * Required fields · Browser validation only
             </p>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex min-h-[48px] items-center justify-center bg-forest px-8 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-light focus:outline-none focus:ring-2 focus:ring-forest focus:ring-offset-2 disabled:opacity-60"
+              className="inline-flex min-h-[48px] items-center justify-center bg-forest px-8 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-deep focus:outline-none focus:ring-2 focus:ring-forest focus:ring-offset-2 disabled:opacity-60"
             >
               {isSubmitting ? "Validating..." : "Submit Inquiry"}
             </button>

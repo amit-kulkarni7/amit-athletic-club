@@ -135,7 +135,6 @@ export const SITE_META = {
   monogram: "AAC",
   tagline: "Strength. Movement. Intention.",
   conceptLocation: "Denver, Colorado — Concept Location",
-  conceptMarketNote: "United States · Illustrative Concept Club",
   conceptHours: [
     { days: "Monday – Friday", hours: "5:30 AM – 9:30 PM" },
     { days: "Saturday – Sunday", hours: "7:00 AM – 7:00 PM" },
@@ -596,17 +595,31 @@ export function calculateAnnualDiscount(
   return { effectiveMonthlyRate, annualTotal, annualSavings };
 }
 
+type MembershipTierSeed = Omit<
+  MembershipTier,
+  "effectiveAnnualMonthlyUsd" | "annualTotalUsd" | "annualSavingsUsd"
+>;
+
+function buildMembershipTier(seed: MembershipTierSeed): MembershipTier {
+  const { effectiveMonthlyRate, annualTotal, annualSavings } =
+    calculateAnnualDiscount(seed.monthlyPriceUsd, seed.annualDiscountPercent);
+
+  return {
+    ...seed,
+    effectiveAnnualMonthlyUsd: effectiveMonthlyRate,
+    annualTotalUsd: annualTotal,
+    annualSavingsUsd: annualSavings,
+  };
+}
+
 export const MEMBERSHIP_TIERS: MembershipTier[] = [
-  {
+  buildMembershipTier({
     id: "foundation",
     index: "PLAN 01",
     name: "Foundation Access",
     tagline: "Open-gym access across all strength, turf, and recovery spaces.",
     monthlyPriceUsd: 195,
-    annualDiscountPercent: 20,
-    effectiveAnnualMonthlyUsd: 156,
-    annualTotalUsd: 1872,
-    annualSavingsUsd: 468,
+    annualDiscountPercent: ANNUAL_DISCOUNT_PERCENT,
     billingNote: "Illustrative USD pricing · Portfolio concept",
     shortDescription:
       "Full open-floor access to the weight room, turf lane, and recovery studio, plus a personal welcome orientation.",
@@ -620,17 +633,14 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
     ],
     idealFor: "Self-directed gym-goers & newcomers training at their own pace",
     ctaLabel: "Inquire About Foundation",
-  },
-  {
+  }),
+  buildMembershipTier({
     id: "all-round",
     index: "PLAN 02",
     name: "Club All-Round",
     tagline: "Open-gym freedom combined with Small-Group & Mobility classes.",
     monthlyPriceUsd: 265,
-    annualDiscountPercent: 20,
-    effectiveAnnualMonthlyUsd: 212,
-    annualTotalUsd: 2544,
-    annualSavingsUsd: 636,
+    annualDiscountPercent: ANNUAL_DISCOUNT_PERCENT,
     billingNote: "Illustrative USD pricing · Most popular balance",
     featured: true,
     badge: "Recommended",
@@ -647,17 +657,14 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
     ],
     idealFor: "Members who want structured weekly coaching alongside open-gym access",
     ctaLabel: "Inquire About Club All-Round",
-  },
-  {
+  }),
+  buildMembershipTier({
     id: "performance",
     index: "PLAN 03",
     name: "Performance & Coaching",
     tagline: "Unlimited group classes paired with personal coaching check-ins.",
     monthlyPriceUsd: 385,
-    annualDiscountPercent: 20,
-    effectiveAnnualMonthlyUsd: 308,
-    annualTotalUsd: 3696,
-    annualSavingsUsd: 924,
+    annualDiscountPercent: ANNUAL_DISCOUNT_PERCENT,
     billingNote: "Illustrative USD pricing · Full coaching support",
     shortDescription:
       "Unlimited Small-Group and Mobility classes paired with twice-monthly 1-on-1 coaching sessions and custom programming.",
@@ -671,7 +678,7 @@ export const MEMBERSHIP_TIERS: MembershipTier[] = [
     ],
     idealFor: "Members seeking ongoing personal programming and hands-on coaching",
     ctaLabel: "Inquire About Performance",
-  },
+  }),
 ];
 
 export const MEMBERSHIP_COMPARISON: MembershipComparisonRow[] = [

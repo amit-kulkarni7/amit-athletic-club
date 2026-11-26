@@ -9,7 +9,6 @@ export function MembershipSection() {
       className="border-b border-stone bg-ivory py-12 sm:py-20 lg:py-24"
     >
       <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-12">
-        {/* Section Index Header */}
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-5 border-b border-stone">
           <div className="flex items-baseline gap-3">
             <span className="font-serif italic text-xl text-forest">04</span>
@@ -25,7 +24,6 @@ export function MembershipSection() {
           </Link>
         </div>
 
-        {/* Section Heading */}
         <div className="mt-8 sm:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end">
           <div className="lg:col-span-7">
             <h2
@@ -47,7 +45,6 @@ export function MembershipSection() {
           </div>
         </div>
 
-        {/* Compact 3-Card Preview Grid */}
         <div className="mt-8 sm:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-0 border border-stone bg-ivory lg:divide-x lg:divide-stone">
           {MEMBERSHIP_TIERS.map((tier) => (
             <article

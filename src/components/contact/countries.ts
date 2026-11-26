@@ -1,4 +1,8 @@
-import { CountryCode, getCountries, getCountryCallingCode } from "libphonenumber-js/max";
+import {
+  CountryCode,
+  getCountries,
+  getCountryCallingCode,
+} from "libphonenumber-js/max";
 
 export interface CountryOption {
   code: CountryCode;
@@ -8,7 +12,6 @@ export interface CountryOption {
 
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 
-// All countries and territories supported by libphonenumber-js
 export const ALL_COUNTRIES: CountryOption[] = getCountries()
   .map((code) => {
     let name: string = code;
@@ -25,14 +28,13 @@ export const ALL_COUNTRIES: CountryOption[] = getCountries()
   })
   .sort((a, b) => a.name.localeCompare(b.name));
 
-// Frequently selected regions for convenience at the top of the selector
 export const POPULAR_COUNTRY_CODES: CountryCode[] = [
-  "US", // United States (+1)
-  "IN", // India (+91)
-  "GB", // United Kingdom (+44)
-  "CA", // Canada (+1)
-  "AU", // Australia (+61)
-  "DE", // Germany (+49)
+  "US",
+  "IN",
+  "GB",
+  "CA",
+  "AU",
+  "DE",
 ];
 
 export const POPULAR_COUNTRIES: CountryOption[] = POPULAR_COUNTRY_CODES.map(
@@ -47,23 +49,6 @@ export const POPULAR_COUNTRIES: CountryOption[] = POPULAR_COUNTRY_CODES.map(
   }
 );
 
-const countryMap = new Map<CountryCode, CountryOption>(
-  ALL_COUNTRIES.map((c) => [c.code, c])
-);
-
-export function getCountryByCode(code: CountryCode): CountryOption {
-  return (
-    countryMap.get(code) || {
-      code,
-      name: code,
-      callingCode: `+${getCountryCallingCode(code)}`,
-    }
-  );
-}
-
-/**
- * Returns an authentic illustrative national-format placeholder hint for the given country.
- */
 export function getSamplePlaceholder(code: CountryCode): string {
   switch (code) {
     case "US":

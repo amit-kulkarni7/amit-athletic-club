@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 export default function ProgramsPage() {
   return (
     <div className="bg-ivory text-graphite">
-      {/* Page Header */}
       <section
         aria-labelledby="programs-hero-heading"
         className="border-b border-graphite/15 pt-12 pb-16 sm:pt-16 sm:pb-20"
@@ -48,7 +47,7 @@ export default function ProgramsPage() {
               </h1>
             </div>
             <div className="lg:col-span-4">
-              <p className="text-base leading-relaxed text-graphite-muted sm:text-lg">
+              <p className="text-base leading-relaxed text-graphite-soft sm:text-lg">
                 Filter our programs by discipline or experience level, review
                 what to expect in each session, and explore our sample weekly
                 class schedule.
@@ -58,16 +57,14 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      {/* Interactive Filter, Program Entries & Weekly Schedule */}
       <ProgramsExplorer />
 
-      {/* Bottom CTA */}
       <section
         aria-labelledby="programs-cta-heading"
         className="py-20 sm:py-24"
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 gap-10 border border-graphite/15 bg-ivory-warm p-8 sm:p-12 lg:grid-cols-12 lg:items-center">
+          <div className="grid grid-cols-1 gap-10 border border-graphite/15 bg-ivory-muted p-8 sm:p-12 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-7">
               <span className="font-mono text-xs font-semibold tracking-[0.2em] text-forest uppercase">
                 NOT SURE WHERE TO START?
@@ -78,7 +75,7 @@ export default function ProgramsPage() {
               >
                 Every membership starts with a personal orientation.
               </h2>
-              <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-muted">
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-graphite-soft">
                 Compare our membership options or reach out through our online
                 inquiry form to ask about an orientation visit or training program.
               </p>
@@ -86,7 +83,7 @@ export default function ProgramsPage() {
             <div className="flex flex-col gap-3.5 sm:flex-row lg:col-span-5 lg:justify-end">
               <Link
                 href="/memberships"
-                className="inline-flex h-12 items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-light"
+                className="inline-flex h-12 items-center justify-center bg-forest px-7 text-xs font-semibold tracking-[0.18em] text-ivory uppercase transition-colors hover:bg-forest-deep"
               >
                 Compare Memberships
               </Link>
